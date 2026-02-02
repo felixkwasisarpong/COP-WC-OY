@@ -34,10 +34,10 @@ export default function AdminSermonsPage() {
       createSermon(
         {
           ...form,
-          description: form.description || null,
-          video_url: form.video_url || null,
-          audio_url: form.audio_url || null,
-          thumbnail_media_id: form.thumbnail_media_id ? Number(form.thumbnail_media_id) : null
+          description: form.description || undefined,
+          video_url: form.video_url || undefined,
+          audio_url: form.audio_url || undefined,
+          thumbnail_media_id: form.thumbnail_media_id ? Number(form.thumbnail_media_id) : undefined
         },
         token || ""
       ),
@@ -62,10 +62,10 @@ export default function AdminSermonsPage() {
         editingId as number,
         {
           ...editForm,
-          description: editForm.description || null,
-          video_url: editForm.video_url || null,
-          audio_url: editForm.audio_url || null,
-          thumbnail_media_id: editForm.thumbnail_media_id ? Number(editForm.thumbnail_media_id) : null
+          description: editForm.description || undefined,
+          video_url: editForm.video_url || undefined,
+          audio_url: editForm.audio_url || undefined,
+          thumbnail_media_id: editForm.thumbnail_media_id ? Number(editForm.thumbnail_media_id) : undefined
         },
         token || ""
       ),
