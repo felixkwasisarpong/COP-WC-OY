@@ -1,0 +1,17 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules/
+.next/
+frontend/.next/
+frontend/node_modules/
+backend/__pycache__/
+backend/.pytest_cache/
+backend/.mypy_cache/
+backend/.venv/
+backend/.env
+backend/.env.*
+backend/alembic/versions/__pycache__/
+backend/media/
+backend/app/__pycache__/
