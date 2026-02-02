@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     env_file: ./.env
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "5434:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
 
@@ -31,6 +31,8 @@ services:
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
     restart: unless-stopped
     env_file: ./.env
+    environment:
+      - PORT=3000
     ports:
       - "${FRONTEND_PORT}:3000"
     depends_on:
