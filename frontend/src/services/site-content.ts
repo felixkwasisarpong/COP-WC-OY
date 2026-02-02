@@ -13,3 +13,11 @@ export type SiteContent = {
 export async function fetchSiteContent() {
   return apiFetch("/site-content");
 }
+
+export async function updateSiteContent(payload: Partial<SiteContent>, token: string) {
+  return apiFetch("/site-content", {
+    method: "PUT",
+    body: JSON.stringify(payload),
+    token
+  });
+}
