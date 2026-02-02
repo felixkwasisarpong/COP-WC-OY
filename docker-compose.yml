@@ -9,6 +9,11 @@ services:
       - "5434:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   backend:
     build:
@@ -21,7 +26,8 @@ services:
     volumes:
       - media_data:${MEDIA_ROOT}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   frontend:
     build:

@@ -16,6 +16,8 @@ def create_user(db: Session, email: str, password: str, role: UserRole = UserRol
 
 
 def authenticate_user(db: Session, email: str, password: str) -> User | None:
+    if len(password.encode("utf-8")) > 72:
+        return None
     user = get_user_by_email(db, email)
     if not user:
         return None
