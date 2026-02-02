@@ -14,35 +14,35 @@ export default function HomePage() {
     <div className="space-y-24">
       <section className="relative overflow-hidden bg-slate-950">
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/80 to-slate-900" />
-        <div className="relative mx-auto max-w-6xl px-4 py-16 md:py-20">
-          <div className="rounded-[2.5rem] bg-slate-900/70 p-4 shadow-soft-xl">
-            {homeVideoUrl ? (
-              <div className="relative aspect-video rounded-[2rem] overflow-hidden">
-                <iframe
-                  title="Welcome video"
-                  src={homeVideoUrl}
-                  className="h-full w-full"
-                  allowFullScreen
-                  loading="lazy"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-indigo-900/40" />
-                <div className="pointer-events-none absolute inset-x-6 bottom-6 flex items-center gap-4 text-white">
-                  <div className="h-12 w-12 rounded-full bg-white/20 border border-white/40 flex items-center justify-center">
-                    <span className="ml-1 text-lg">▶</span>
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.3em] text-white/80">Welcome video</p>
-                    <p className="font-display text-2xl">A message of hope and purpose</p>
-                  </div>
+        <div className="relative">
+          {homeVideoUrl ? (
+            <div className="relative aspect-video w-full overflow-hidden">
+              <iframe
+                title="Welcome video"
+                src={homeVideoUrl}
+                className="h-full w-full"
+                allowFullScreen
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-indigo-900/40" />
+              <div className="pointer-events-none absolute inset-x-6 bottom-6 flex items-center gap-4 text-white">
+                <div className="h-12 w-12 rounded-full bg-white/20 border border-white/40 flex items-center justify-center">
+                  <span className="ml-1 text-lg">▶</span>
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/80">Welcome video</p>
+                  <p className="font-display text-2xl">A message of hope and purpose</p>
                 </div>
               </div>
-            ) : (
-              <div className="aspect-video rounded-[2rem] border border-slate-700 bg-slate-900 flex items-center justify-center text-sm text-slate-300">
-                Add `NEXT_PUBLIC_HOME_VIDEO_URL` to show the welcome video.
-              </div>
-            )}
-          </div>
-          <div className="mt-10 grid gap-6 md:grid-cols-3 text-white">
+            </div>
+          ) : (
+            <div className="aspect-video w-full border border-slate-700 bg-slate-900 flex items-center justify-center text-sm text-slate-300">
+              Add `NEXT_PUBLIC_HOME_VIDEO_URL` to show the welcome video.
+            </div>
+          )}
+        </div>
+        <div className="relative mx-auto max-w-6xl px-4 py-10 md:py-12">
+          <div className="grid gap-6 md:grid-cols-3 text-white">
             <div className="rounded-3xl bg-white/5 p-5">
               <p className="text-xs uppercase tracking-[0.3em] text-wheat">Service Times</p>
               <p className="mt-2 text-sm text-slate-200">Sundays • 9:00 AM & 11:00 AM</p>
