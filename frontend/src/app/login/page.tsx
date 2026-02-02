@@ -6,7 +6,7 @@ import { SectionHeading } from "@/components/section-heading";
 import { Button } from "@/components/button";
 import { useAuth } from "@/hooks/use-auth";
 
-export default function AdminLoginPage() {
+export default function MemberLoginPage() {
   const { login } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ export default function AdminLoginPage() {
     setLoading(true);
     try {
       await login(email, password);
-      router.push("/admin");
+      router.push("/");
     } catch (err) {
       setError("Login failed. Please check your credentials.");
     } finally {
@@ -31,9 +31,9 @@ export default function AdminLoginPage() {
   return (
     <div className="mx-auto max-w-xl px-4 py-16 space-y-10">
       <SectionHeading
-        eyebrow="Admin"
-        title="Admin portal access"
-        description="Authorized staff only. Members should use the member login page."
+        eyebrow="Members"
+        title="Member login"
+        description="Sign in to access member-only resources and downloads."
       />
       <form onSubmit={handleSubmit} className="rounded-[2.5rem] bg-white/80 p-8 shadow-soft-xl space-y-4">
         <label className="text-sm text-slate-600">

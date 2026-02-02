@@ -8,7 +8,7 @@
 
 body {
   @apply bg-warm-gradient text-ink font-sans antialiased;
-  background-color: #fdfaf5;
+  background-color: #eef5ff;
 }
 
 ::selection {

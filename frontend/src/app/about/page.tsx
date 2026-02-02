@@ -12,7 +12,7 @@ export default function AboutPage() {
       <div className="grid gap-10 md:grid-cols-2 items-center">
         <div className="space-y-4 text-slate-600">
           <p>
-            Covenant of Praise Church is a vibrant community committed to authentic worship,
+            The Church of Pentecost, Oyarifa Worship Center is a vibrant community committed to authentic worship,
             compassionate outreach, and transformational discipleship. We believe the local church
             is the hope of the world when we gather, grow, and go together.
           </p>

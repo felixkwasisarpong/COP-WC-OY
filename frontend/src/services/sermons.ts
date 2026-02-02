@@ -19,3 +19,26 @@ export async function fetchSermons() {
 export async function fetchSermon(id: string | number) {
   return apiFetch(`/sermons/${id}`);
 }
+
+export async function createSermon(payload: Partial<Sermon>, token: string) {
+  return apiFetch("/sermons", {
+    method: "POST",
+    body: JSON.stringify(payload),
+    token
+  });
+}
+
+export async function updateSermon(id: number, payload: Partial<Sermon>, token: string) {
+  return apiFetch(`/sermons/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(payload),
+    token
+  });
+}
+
+export async function deleteSermon(id: number, token: string) {
+  return apiFetch(`/sermons/${id}`, {
+    method: "DELETE",
+    token
+  });
+}

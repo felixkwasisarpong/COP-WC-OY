@@ -58,3 +58,4 @@ frontend/
 - Create a member via `POST /api/v1/auth/register`.
 - Promote to admin by updating the `users.role` in the database for the first admin account.
 - Subsequent admins can be created via `POST /api/v1/auth/admin` (admin-only).
+ - Or set `ADMIN_EMAIL` and `ADMIN_PASSWORD` in `.env` to auto-create the first admin on startup.

@@ -11,3 +11,11 @@ export type Livestream = {
 export async function fetchLivestream() {
   return apiFetch("/livestream");
 }
+
+export async function updateLivestream(payload: Partial<Livestream>, token: string) {
+  return apiFetch("/livestream", {
+    method: "PUT",
+    body: JSON.stringify(payload),
+    token
+  });
+}
