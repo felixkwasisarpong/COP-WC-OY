@@ -119,7 +119,7 @@ export default function AdminMediaPage() {
         {isLoading ? (
           <p className="text-sm text-slate-600">Loading media...</p>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {(data?.items || []).map((media: any) => (
               <div key={media.id} className="rounded-[2rem] bg-white/90 p-5 shadow-soft-md space-y-3">
                 {media.content_type?.startsWith("image/") ? (
