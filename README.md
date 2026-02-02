@@ -52,6 +52,7 @@ frontend/
 - Media files are stored locally via an abstraction layer and can be swapped to S3 later.
 - Livestreams are embedded only (YouTube/Vimeo). No custom streaming infrastructure.
 - Payment endpoints are stubbed for Stripe/PayPal integration.
+- Site-wide imagery and featured content are managed via `/api/v1/site-content`.
 
 ## Admin Bootstrap
 - Create a member via `POST /api/v1/auth/register`.
