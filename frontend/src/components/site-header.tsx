@@ -11,7 +11,6 @@ const navItems = [
   { href: "/about", label: "About" },
   { href: "/ministries", label: "Ministries" },
   { href: "/leadership", label: "Leadership" },
-  { href: "/areas", label: "Areas and Districts" },
   { href: "/gallery", label: "Media" },
   { href: "/contact", label: "Contact" }
 ];
