@@ -18,7 +18,7 @@ export default function AdminMediaPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isPublic, setIsPublic] = useState(true);
-  const [downloadsEnabled, setDownloadsEnabled] = useState(false);
+  const [downloadsEnabled, setDownloadsEnabled] = useState(true);
   const [uploadError, setUploadError] = useState<string | null>(null);
 
   const uploadMutation = useMutation({
@@ -88,7 +88,7 @@ export default function AdminMediaPage() {
           />
           <input
             className="rounded-2xl border border-wheat px-4 py-3"
-            placeholder="Description"
+            placeholder="Description (optional)"
             value={description}
             onChange={(event) => setDescription(event.target.value)}
           />
@@ -138,7 +138,6 @@ export default function AdminMediaPage() {
                 )}
                 <div>
                   <h4 className="font-display text-xl text-ink">{media.title}</h4>
-                  <p className="text-xs text-slate-500">{media.filename}</p>
                 </div>
                 <div className="flex flex-wrap gap-4 text-sm text-slate-600">
                   <label className="flex items-center gap-2">
@@ -166,9 +165,22 @@ export default function AdminMediaPage() {
                   </label>
                 </div>
                 <div className="flex flex-wrap gap-3">
+                  <a
+                    href={mediaViewUrl(media.id)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-full border border-ember px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember"
+                  >
+                    Preview
+                  </a>
                   <button
                     onClick={() => handleDownload(media.id, media.filename)}
-                    className="rounded-full border border-ember px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember"
+                    disabled={!media.downloads_enabled}
+                    className={`rounded-full border px-4 py-2 text-xs uppercase tracking-[0.3em] ${
+                      media.downloads_enabled
+                        ? "border-ember text-ember"
+                        : "border-slate-200 text-slate-400 cursor-not-allowed"
+                    }`}
                   >
                     Download
                   </button>

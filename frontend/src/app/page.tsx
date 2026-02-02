@@ -71,7 +71,7 @@ export default function HomePage() {
         <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr] items-center">
           <div className="rounded-[2.5rem] bg-white/90 p-6 shadow-soft-xl">
             {homeVideoUrl ? (
-              <div className="aspect-video rounded-3xl overflow-hidden">
+              <div className="relative aspect-video rounded-3xl overflow-hidden">
                 <iframe
                   title="Welcome video"
                   src={homeVideoUrl}
@@ -79,6 +79,16 @@ export default function HomePage() {
                   allowFullScreen
                   loading="lazy"
                 />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
+                <div className="pointer-events-none absolute inset-x-6 bottom-6 flex items-center gap-4 text-white">
+                  <div className="h-12 w-12 rounded-full bg-white/20 border border-white/40 flex items-center justify-center">
+                    <span className="ml-1 text-lg">▶</span>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.3em] text-white/80">Welcome video</p>
+                    <p className="font-display text-2xl">A message of hope and purpose</p>
+                  </div>
+                </div>
               </div>
             ) : (
               <div className="aspect-video rounded-3xl border border-wheat bg-mist flex items-center justify-center text-sm text-slate-600">

@@ -1,7 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchMedia, mediaViewUrl } from "@/services/media";
+import { fetchMedia } from "@/services/media";
+import { MediaGrid } from "@/components/media-grid";
 import { SectionHeading } from "@/components/section-heading";
 
 export default function GalleryPage() {
@@ -20,24 +21,7 @@ export default function GalleryPage() {
       {isLoading ? (
         <p className="text-center text-sm text-slate-500">Loading gallery...</p>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-          {(data?.items || []).map((media: any) => (
-            <div key={media.id} className="rounded-3xl bg-white/80 p-4 shadow-soft-md">
-              <div className="h-40 rounded-2xl bg-gradient-to-br from-wheat via-white to-mist flex items-center justify-center text-ember overflow-hidden">
-                <img
-                  src={mediaViewUrl(media.id)}
-                  alt={media.title}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-              <div className="mt-4">
-                <h3 className="font-display text-xl">{media.title}</h3>
-                {media.description && <p className="text-sm text-slate-600">{media.description}</p>}
-              </div>
-            </div>
-          ))}
-        </div>
+        <MediaGrid items={data?.items || []} />
       )}
     </div>
   );
