@@ -8,15 +8,18 @@ from sqlalchemy import create_engine, text
 from app.core.config import settings
 
 engine = create_engine(settings.database_url, pool_pre_ping=True)
-for _ in range(30):
+last_error = None
+for _ in range(60):
     try:
         with engine.connect() as connection:
             connection.execute(text("SELECT 1"))
+        last_error = None
         break
-    except Exception:
+    except Exception as exc:
+        last_error = exc
         time.sleep(1)
-else:
-    raise SystemExit("Database not ready")
+if last_error:
+    raise SystemExit(f"Database not ready: {last_error}")
 PY
 
 echo "Running migrations..."
