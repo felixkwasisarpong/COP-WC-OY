@@ -14,7 +14,7 @@ export default function AdminMediaPage() {
     queryFn: () => fetchMedia(token)
   });
 
-  const [file, setFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isPublic, setIsPublic] = useState(true);
@@ -23,19 +23,23 @@ export default function AdminMediaPage() {
 
   const uploadMutation = useMutation({
     mutationFn: async () => {
-      if (!file) {
+      if (files.length === 0) {
         throw new Error("No file selected");
       }
-      const form = new FormData();
-      form.append("file", file);
-      form.append("title", title || file.name);
-      form.append("description", description);
-      form.append("is_public", String(isPublic));
-      form.append("downloads_enabled", String(downloadsEnabled));
-      return uploadMedia(form, token || "");
+      for (const file of files) {
+        const form = new FormData();
+        form.append("file", file);
+        const resolvedTitle = files.length > 1 ? file.name : title || file.name;
+        form.append("title", resolvedTitle);
+        form.append("description", description);
+        form.append("is_public", String(isPublic));
+        form.append("downloads_enabled", String(downloadsEnabled));
+        await uploadMedia(form, token || "");
+      }
+      return true;
     },
     onSuccess: () => {
-      setFile(null);
+      setFiles([]);
       setTitle("");
       setDescription("");
       setIsPublic(true);
@@ -70,11 +74,12 @@ export default function AdminMediaPage() {
           <input
             type="file"
             className="rounded-2xl border border-wheat px-4 py-3"
-            onChange={(event) => setFile(event.target.files?.[0] || null)}
+            multiple
+            onChange={(event) => setFiles(Array.from(event.target.files || []))}
           />
           <input
             className="rounded-2xl border border-wheat px-4 py-3"
-            placeholder="Title"
+            placeholder="Title (optional for single upload)"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
           />
@@ -103,6 +108,9 @@ export default function AdminMediaPage() {
         >
           {uploadMutation.isPending ? "Uploading..." : "Upload"}
         </button>
+        {files.length > 0 && (
+          <p className="text-xs text-slate-500">{files.length} file(s) selected</p>
+        )}
         {uploadError && <p className="text-sm text-ember">{uploadError}</p>}
       </div>
 
