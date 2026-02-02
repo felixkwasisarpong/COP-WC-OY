@@ -23,8 +23,14 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 bg-mist/90 backdrop-blur border-b border-wheat">
       <div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
-        <Link href="/" className="font-display text-2xl tracking-wide">
-          Covenant of Praise
+        <Link href="/" className="flex items-center gap-3">
+          <img src="/logo.svg" alt="The Church of Pentecost logo" className="h-10 w-10" />
+          <span className="font-display text-lg leading-tight">
+            <span className="block">The Church of Pentecost</span>
+            <span className="block text-xs uppercase tracking-[0.3em] text-slate-500">
+              Oyarifa Worship Center
+            </span>
+          </span>
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-sm uppercase tracking-[0.2em]">
           {navItems.map((item) => (
@@ -32,6 +38,11 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          {user?.role === "admin" && (
+            <Link href="/admin" className="text-sm uppercase tracking-[0.2em] text-ember">
+              Admin
+            </Link>
+          )}
           {user ? (
             <button
               onClick={logout}
@@ -40,8 +51,8 @@ export function SiteHeader() {
               Sign out
             </button>
           ) : (
-            <Link href="/admin/login" className="gradient-border relative px-5 py-2 rounded-full text-sm">
-              Admin
+            <Link href="/login" className="gradient-border relative px-5 py-2 rounded-full text-sm">
+              Login
             </Link>
           )}
         </nav>
@@ -60,6 +71,11 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          {user?.role === "admin" && (
+            <Link href="/admin" className="block text-sm uppercase tracking-[0.2em] text-ember">
+              Admin
+            </Link>
+          )}
           {user ? (
             <button
               onClick={logout}
@@ -68,8 +84,8 @@ export function SiteHeader() {
               Sign out
             </button>
           ) : (
-            <Link href="/admin/login" className="block w-full px-5 py-2 rounded-full border border-ember text-ember">
-              Admin
+            <Link href="/login" className="block w-full px-5 py-2 rounded-full border border-ember text-ember">
+              Login
             </Link>
           )}
         </div>
