@@ -8,9 +8,11 @@ import { Tenets } from "@/components/home/tenets";
 import { AnnouncementPreview } from "@/components/home/announcement-preview";
 
 export default function HomePage() {
+  const homeVideoUrl = process.env.NEXT_PUBLIC_HOME_VIDEO_URL;
+
   return (
     <div className="space-y-24">
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden bg-white">
         <div className="absolute inset-0 bg-hero-glow" />
         <div className="relative mx-auto max-w-6xl px-4 py-20 md:py-28 grid gap-12 md:grid-cols-[1.05fr_0.95fr] items-center">
           <div className="space-y-6 animate-fade-up">
@@ -62,6 +64,44 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-6xl px-4 space-y-10">
         <SectionHeading
+          eyebrow="Welcome"
+          title="A word of hope for every season"
+          description="Watch a short message from our leadership and get to know our heart."
+        />
+        <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr] items-center">
+          <div className="rounded-[2.5rem] bg-white/90 p-6 shadow-soft-xl">
+            {homeVideoUrl ? (
+              <div className="aspect-video rounded-3xl overflow-hidden">
+                <iframe
+                  title="Welcome video"
+                  src={homeVideoUrl}
+                  className="h-full w-full"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
+            ) : (
+              <div className="aspect-video rounded-3xl border border-wheat bg-mist flex items-center justify-center text-sm text-slate-600">
+                Add `NEXT_PUBLIC_HOME_VIDEO_URL` to show the welcome video.
+              </div>
+            )}
+          </div>
+          <div className="space-y-4">
+            <p className="text-xs uppercase tracking-[0.3em] text-ember">Our Story</p>
+            <h3 className="font-display text-3xl text-ink">A Spirit-led church rooted in Scripture.</h3>
+            <p className="text-sm text-slate-600">
+              The Church of Pentecost exists to proclaim Christ, equip believers, and impact our
+              communities through worship, prayer, and mission.
+            </p>
+            <Button href="/about" variant="outline">
+              Learn more
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 space-y-10">
+        <SectionHeading
           eyebrow="Our Tenets"
           title="What we believe"
           description="The foundations that shape our worship, community, and mission."
@@ -95,11 +135,56 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-6xl px-4 space-y-10">
         <SectionHeading
-          eyebrow="Latest updates"
+          eyebrow="Latest posts"
           title="News and announcements"
           description="Stay connected with what is happening across the ministry."
         />
         <AnnouncementPreview />
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 space-y-10">
+        <SectionHeading
+          eyebrow="Get connected"
+          title="Explore the life of the church"
+          description="Discover ministries, gatherings, and resources to help you grow."
+        />
+        <div className="grid gap-6 md:grid-cols-3">
+          {[
+            { title: "Join us", body: "Plan your visit and worship with us this Sunday.", href: "/contact" },
+            { title: "Ministries", body: "Find a ministry for every season and generation.", href: "/ministries" },
+            { title: "Know our leaders", body: "Meet the pastors and ministry leaders.", href: "/leadership" },
+            { title: "Get resources", body: "Watch sermons and access teaching materials.", href: "/sermons" },
+            { title: "Give", body: "Partner with us in kingdom impact.", href: "/give" },
+            { title: "Have questions?", body: "We are here to help you take your next step.", href: "/contact" }
+          ].map((card) => (
+            <div key={card.title} className="rounded-3xl bg-white/90 p-6 shadow-soft-md">
+              <p className="text-xs uppercase tracking-[0.3em] text-ember">{card.title}</p>
+              <p className="mt-3 text-sm text-slate-600">{card.body}</p>
+              <Button href={card.href} variant="outline" className="mt-4">
+                Learn more
+              </Button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-10">
+        <div className="rounded-[2.5rem] bg-mist border border-wheat p-10 md:p-16 grid gap-10 md:grid-cols-[1.2fr_0.8fr] items-center">
+          <div className="space-y-4">
+            <p className="text-xs uppercase tracking-[0.3em] text-ember">Jesus is calling</p>
+            <h2 className="font-display text-3xl md:text-4xl text-ink">Respond to the call of Jesus Christ today.</h2>
+            <p className="text-sm text-slate-600">
+              If you are ready to begin a new life in Christ, we would love to pray with you and
+              help you take your next step.
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            <Button href="/contact">Reach out</Button>
+            <Button href="/about" variant="outline">
+              Learn more
+            </Button>
+          </div>
+        </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 space-y-10">

@@ -26,10 +26,13 @@ export default function AdminMediaPage() {
       if (files.length === 0) {
         throw new Error("No file selected");
       }
+      if (!title) {
+        throw new Error("Title is required");
+      }
       for (const file of files) {
         const form = new FormData();
         form.append("file", file);
-        const resolvedTitle = files.length > 1 ? file.name : title || file.name;
+        const resolvedTitle = files.length > 1 ? `${title} ${files.indexOf(file) + 1}` : title;
         form.append("title", resolvedTitle);
         form.append("description", description);
         form.append("is_public", String(isPublic));
@@ -47,7 +50,7 @@ export default function AdminMediaPage() {
       setUploadError(null);
       queryClient.invalidateQueries({ queryKey: ["admin-media"] });
     },
-    onError: () => setUploadError("Upload failed. Please try again.")
+    onError: (error) => setUploadError(error instanceof Error ? error.message : "Upload failed. Please try again.")
   });
 
   const updateMutation = useMutation({
@@ -79,7 +82,7 @@ export default function AdminMediaPage() {
           />
           <input
             className="rounded-2xl border border-wheat px-4 py-3"
-            placeholder="Title (optional for single upload)"
+            placeholder="Title (required)"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
           />

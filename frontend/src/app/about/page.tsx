@@ -5,40 +5,47 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-16 space-y-14">
       <SectionHeading
-        eyebrow="Our story"
-        title="A mission to love God and serve people"
-        description="We exist to help people encounter Jesus, grow in faith, and live on mission together."
+        eyebrow="About us"
+        title="The Church of Pentecost — Oyarifa Worship Center"
+        description="A Bible-believing, Holy Spirit, people and mission oriented church."
       />
       <div className="grid gap-10 md:grid-cols-2 items-center">
         <div className="space-y-4 text-slate-600">
           <p>
-            The Church of Pentecost, Oyarifa Worship Center is a vibrant community committed to authentic worship,
-            compassionate outreach, and transformational discipleship. We believe the local church
-            is the hope of the world when we gather, grow, and go together.
+            We are part of The Church of Pentecost, a global Pentecostal movement devoted to
+            proclaiming Christ, making disciples, and serving communities with compassion.
           </p>
           <p>
-            Our vision is to create spaces where families thrive, students lead with courage, and
-            every person can discover their God-given purpose.
+            Our local assembly gathers for vibrant worship, teaching, and fellowship, equipping
+            believers to live Spirit-empowered lives.
           </p>
-          <ul className="space-y-3 text-sm">
-            <li>Mission: Help people know Jesus and make Him known.</li>
-            <li>Vision: A thriving church impacting our city and beyond.</li>
-            <li>Beliefs: Rooted in Scripture, empowered by grace, centered on Christ.</li>
-          </ul>
+          <div className="grid gap-4 text-sm text-slate-600">
+            <div>
+              <span className="text-xs uppercase tracking-[0.3em] text-ember">Vision</span>
+              <p className="mt-2">
+                To become a global Pentecostal church that is culturally relevant in vibrant evangelism,
+                church planting, discipleship, and holistic ministry.
+              </p>
+            </div>
+            <div>
+              <span className="text-xs uppercase tracking-[0.3em] text-ember">Mission</span>
+              <p className="mt-2">
+                To establish responsible, self-sustaining churches filled with committed, Spirit-filled
+                believers who impact their communities.
+              </p>
+            </div>
+          </div>
         </div>
         <div className="space-y-6">
           <PageImage kind="about" fallback="Our community" />
-          <div className="rounded-[2.5rem] bg-white/80 p-8 shadow-soft-xl">
-            <div className="rounded-[2rem] bg-gradient-to-br from-wheat via-white to-mist p-8 space-y-4">
-              <h3 className="font-display text-2xl">What we value</h3>
-              <p className="text-sm text-slate-600">
-                Worship that is heartfelt. Community that is intentional. Service that is generous.
-              </p>
-              <div className="grid gap-4 text-sm text-slate-600">
-                <div>Spirit-led worship and prayer</div>
-                <div>Life-giving small groups</div>
-                <div>Compassionate outreach</div>
-                <div>Next generation leadership</div>
+          <div className="rounded-[2.5rem] bg-white/90 p-8 shadow-soft-xl">
+            <div className="rounded-[2rem] bg-mist p-8 space-y-4">
+              <h3 className="font-display text-2xl">Core values</h3>
+              <div className="grid gap-3 text-sm text-slate-600">
+                <div>Prayer and dependence on the Holy Spirit</div>
+                <div>Holiness and integrity</div>
+                <div>Evangelism and discipleship</div>
+                <div>Stewardship and servant leadership</div>
               </div>
             </div>
           </div>
