@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-wheat bg-mist">
+    <footer className="border-t border-wheat bg-white">
       <div className="mx-auto max-w-6xl px-4 py-12 grid gap-8 md:grid-cols-[2fr_1fr_1fr]">
         <div>
           <h3 className="font-display text-2xl">The Church of Pentecost</h3>
@@ -33,6 +33,9 @@ export function SiteFooter() {
             </li>
             <li>
               <Link href="/ministries">Ministries</Link>
+            </li>
+            <li>
+              <Link href="/gallery">Media</Link>
             </li>
             <li>
               <Link href="/give">Online Giving</Link>

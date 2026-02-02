@@ -8,11 +8,11 @@ import { useAuth } from "@/hooks/use-auth";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/sermons", label: "Sermons" },
-  { href: "/live", label: "Live" },
-  { href: "/events", label: "Events" },
   { href: "/ministries", label: "Ministries" },
-  { href: "/give", label: "Give" },
+  { href: "/leadership", label: "Leadership" },
+  { href: "/sermons", label: "Sermons" },
+  { href: "/events", label: "Events" },
+  { href: "/gallery", label: "Media" },
   { href: "/contact", label: "Contact" }
 ];
 
@@ -21,7 +21,12 @@ export function SiteHeader() {
   const { user, logout } = useAuth();
 
   return (
-    <header className="sticky top-0 z-50 bg-mist/90 backdrop-blur border-b border-wheat">
+    <header className="sticky top-0 z-50 bg-mist/95 backdrop-blur border-b border-wheat">
+      <div className="bg-ember text-white text-xs uppercase tracking-[0.4em]">
+        <div className="mx-auto max-w-6xl px-4 py-2">
+          We are a Bible-believing, Holy Spirit, people and mission oriented church
+        </div>
+      </div>
       <div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
           <img src="/logo.svg" alt="The Church of Pentecost logo" className="h-10 w-10" />
@@ -32,14 +37,14 @@ export function SiteHeader() {
             </span>
           </span>
         </Link>
-        <nav className="hidden md:flex items-center gap-6 text-sm uppercase tracking-[0.2em]">
+        <nav className="hidden md:flex items-center gap-6 text-xs uppercase tracking-[0.3em]">
           {navItems.map((item) => (
             <Link key={item.href} href={item.href} className="hover:text-ember transition">
               {item.label}
             </Link>
           ))}
           {user?.role === "admin" && (
-            <Link href="/admin" className="text-sm uppercase tracking-[0.2em] text-ember">
+            <Link href="/admin" className="text-xs uppercase tracking-[0.3em] text-ember">
               Admin
             </Link>
           )}
