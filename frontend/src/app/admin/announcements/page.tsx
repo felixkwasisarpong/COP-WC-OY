@@ -16,7 +16,7 @@ export default function AdminAnnouncementsPage() {
   const { token } = useAuth();
   const { data, isLoading } = useQuery({
     queryKey: ["admin-announcements"],
-    queryFn: fetchAnnouncements
+    queryFn: () => fetchAnnouncements(token, false)
   });
 
   const [form, setForm] = useState({

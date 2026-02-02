@@ -9,8 +9,9 @@ export type Announcement = {
   is_active: boolean;
 };
 
-export async function fetchAnnouncements() {
-  return apiFetch("/announcements?offset=0&limit=20&active_only=false");
+export async function fetchAnnouncements(token?: string | null, activeOnly = true) {
+  const activeParam = activeOnly ? "true" : "false";
+  return apiFetch(`/announcements?offset=0&limit=20&active_only=${activeParam}`, { token });
 }
 
 export async function createAnnouncement(payload: Partial<Announcement>, token: string) {

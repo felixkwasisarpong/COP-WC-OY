@@ -24,7 +24,7 @@ export default function AdminDashboard() {
   const { data: events } = useQuery({ queryKey: ["admin-events"], queryFn: fetchEvents });
   const { data: announcements } = useQuery({
     queryKey: ["admin-announcements"],
-    queryFn: fetchAnnouncements
+    queryFn: () => fetchAnnouncements(token, false)
   });
   const { data: media } = useQuery({
     queryKey: ["admin-media"],
