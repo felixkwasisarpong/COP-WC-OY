@@ -15,3 +15,4 @@ backend/.env.*
 backend/alembic/versions/__pycache__/
 backend/media/
 backend/app/__pycache__/
+key
