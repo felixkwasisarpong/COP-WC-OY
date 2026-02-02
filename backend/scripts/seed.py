@@ -43,6 +43,9 @@ def seed_site_content(db, media_ids, force=False):
 
 def seed_sermons(db, media_ids, force=False, count=6):
     if force:
+        db.execute(
+            SiteContent.__table__.update().values(featured_sermon_id=None)
+        )
         db.query(Sermon).delete()
         db.flush()
 
@@ -84,6 +87,9 @@ def seed_sermons(db, media_ids, force=False, count=6):
 
 def seed_events(db, media_ids, force=False, count=6):
     if force:
+        db.execute(
+            SiteContent.__table__.update().values(featured_event_id=None)
+        )
         db.query(Event).delete()
         db.flush()
 
