@@ -1,4 +1,5 @@
 import { SectionHeading } from "@/components/section-heading";
+import { PageImage } from "@/components/page-image";
 
 export default function ContactPage() {
   return (
@@ -18,6 +19,7 @@ export default function ContactPage() {
             <p className="mt-2 text-sm">Mon - Thu: 9:00 AM - 4:00 PM</p>
             <p className="text-sm">Friday: 9:00 AM - 1:00 PM</p>
           </div>
+          <PageImage kind="contact" fallback="Visit us" />
         </div>
         <div className="rounded-3xl overflow-hidden shadow-soft-xl">
           <iframe

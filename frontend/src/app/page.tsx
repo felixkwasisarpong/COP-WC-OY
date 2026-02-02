@@ -2,6 +2,8 @@ import { Button } from "@/components/button";
 import { SectionHeading } from "@/components/section-heading";
 import { SermonPreview } from "@/components/home/sermon-preview";
 import { EventPreview } from "@/components/home/event-preview";
+import { HeroMedia } from "@/components/home/hero-media";
+import { FeaturedContent } from "@/components/home/featured-content";
 
 export default function HomePage() {
   return (
@@ -39,23 +41,19 @@ export default function HomePage() {
             </div>
           </div>
           <div className="relative">
-            <div className="aspect-[4/5] rounded-[2.5rem] bg-white/80 shadow-soft-xl p-6">
-              <div className="h-full rounded-[2rem] bg-gradient-to-br from-wheat via-white to-mist flex flex-col justify-between">
-                <div className="p-6">
-                  <p className="text-xs uppercase tracking-[0.3em] text-ember">This Week</p>
-                  <h2 className="mt-3 font-display text-3xl">"Faith that Moves"</h2>
-                  <p className="mt-3 text-sm text-slate-600">Join Pastor Jordan for a message on steadfast hope.</p>
-                </div>
-                <div className="p-6">
-                  <Button href="/sermons" variant="outline">
-                    Explore Sermons
-                  </Button>
-                </div>
-              </div>
-            </div>
+            <HeroMedia />
             <div className="absolute -bottom-8 -left-6 h-32 w-32 rounded-full bg-ember/20 blur-2xl animate-float" />
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 space-y-10">
+        <SectionHeading
+          eyebrow="Featured"
+          title="Highlighted for this season"
+          description="Admin-selected sermon and event highlights for the church family."
+        />
+        <FeaturedContent />
       </section>
 
       <section className="mx-auto max-w-6xl px-4 space-y-10">

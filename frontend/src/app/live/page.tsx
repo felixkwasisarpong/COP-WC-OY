@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchLivestream } from "@/services/livestream";
 import { LiveIndicator } from "@/components/live-indicator";
 import { SectionHeading } from "@/components/section-heading";
+import { mediaViewUrl } from "@/services/media";
 
 export default function LivePage() {
   const { data, isLoading } = useQuery({
@@ -38,7 +39,15 @@ export default function LivePage() {
               />
             </div>
           ) : (
-            <div className="rounded-3xl bg-white/80 p-12 text-center shadow-soft-md">
+            <div className="rounded-3xl bg-white/80 p-12 text-center shadow-soft-md space-y-4">
+              {data.cover_image_id && (
+                <img
+                  src={mediaViewUrl(data.cover_image_id)}
+                  alt="Livestream cover"
+                  className="w-full h-64 object-cover rounded-2xl"
+                  loading="lazy"
+                />
+              )}
               <p className="text-sm text-slate-600">Livestream is offline. Check back during service times.</p>
             </div>
           )}
