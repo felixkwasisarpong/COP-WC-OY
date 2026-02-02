@@ -9,17 +9,26 @@ import { AnnouncementPreview } from "@/components/home/announcement-preview";
 
 export default function HomePage() {
   const homeVideoUrl = process.env.NEXT_PUBLIC_HOME_VIDEO_URL;
+  const embedUrl = homeVideoUrl
+    ? homeVideoUrl.includes("youtube.com/embed")
+      ? homeVideoUrl
+      : homeVideoUrl.includes("youtu.be/")
+        ? `https://www.youtube.com/embed/${homeVideoUrl.split("youtu.be/")[1].split("?")[0]}`
+        : homeVideoUrl.includes("youtube.com/watch")
+          ? `https://www.youtube.com/embed/${new URL(homeVideoUrl).searchParams.get("v")}`
+          : homeVideoUrl
+    : null;
 
   return (
     <div className="space-y-24">
       <section className="relative overflow-hidden bg-slate-950">
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/80 to-slate-900" />
         <div className="relative">
-          {homeVideoUrl ? (
+          {embedUrl ? (
             <div className="relative aspect-video w-full overflow-hidden">
               <iframe
                 title="Welcome video"
-                src={homeVideoUrl}
+                src={embedUrl}
                 className="h-full w-full"
                 allowFullScreen
                 loading="lazy"
@@ -37,7 +46,7 @@ export default function HomePage() {
             </div>
           ) : (
             <div className="aspect-video w-full border border-slate-700 bg-slate-900 flex items-center justify-center text-sm text-slate-300">
-              Add `NEXT_PUBLIC_HOME_VIDEO_URL` to show the welcome video.
+              Add `NEXT_PUBLIC_HOME_VIDEO_URL` (YouTube/Vimeo embed URL) to show the welcome video.
             </div>
           )}
         </div>
