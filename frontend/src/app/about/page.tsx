@@ -1,4 +1,5 @@
 import { SectionHeading } from "@/components/section-heading";
+import { Button } from "@/components/button";
 import { PageImage } from "@/components/page-image";
 
 export default function AboutPage() {
