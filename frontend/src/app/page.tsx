@@ -18,22 +18,30 @@ export default function HomePage() {
           ? `https://www.youtube.com/embed/${new URL(homeVideoUrl).searchParams.get("v")}`
           : homeVideoUrl
     : null;
+  const youtubeId = embedUrl?.includes("youtube.com/embed/")
+    ? embedUrl.split("youtube.com/embed/")[1].split("?")[0]
+    : null;
+  const videoSrc = embedUrl
+    ? youtubeId
+      ? `${embedUrl}?autoplay=1&mute=1&controls=0&loop=1&playlist=${youtubeId}&rel=0&modestbranding=1&playsinline=1`
+      : embedUrl
+    : null;
 
   return (
     <div className="space-y-24">
       <section className="relative overflow-hidden bg-slate-950">
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/80 to-slate-900" />
         <div className="relative">
-          {embedUrl ? (
+          {videoSrc ? (
             <div className="relative aspect-video w-full overflow-hidden">
               <iframe
                 title="Welcome video"
-                src={embedUrl}
+                src={videoSrc}
                 className="h-full w-full"
                 allowFullScreen
                 loading="lazy"
               />
-              <div className="pointer-events-none absolute inset-0 bg-indigo-900/40" />
+              <div className="pointer-events-none absolute inset-0 bg-indigo-900/70" />
               <div className="pointer-events-none absolute inset-x-6 bottom-6 flex items-center gap-4 text-white">
                 <div className="h-12 w-12 rounded-full bg-white/20 border border-white/40 flex items-center justify-center">
                   <span className="ml-1 text-lg">▶</span>
@@ -96,15 +104,6 @@ export default function HomePage() {
           </div>
           <Tenets />
         </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 space-y-10">
-        <SectionHeading
-          eyebrow="Our Tenets"
-          title="What we believe"
-          description="The foundations that shape our worship, community, and mission."
-        />
-        <Tenets />
       </section>
 
       <section className="mx-auto max-w-6xl px-4 space-y-10">
