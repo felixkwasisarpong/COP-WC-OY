@@ -12,43 +12,59 @@ export default function HomePage() {
 
   return (
     <div className="space-y-24">
-      <section className="relative overflow-hidden bg-white">
-        <div className="absolute inset-0 bg-hero-glow" />
-        <div className="relative mx-auto max-w-6xl px-4 py-20 md:py-28 grid gap-12 md:grid-cols-[1.05fr_0.95fr] items-center">
-          <div className="space-y-6 animate-fade-up">
-            <p className="text-xs uppercase tracking-[0.4em] text-ember">The Church of Pentecost</p>
-            <h1 className="font-display text-4xl md:text-5xl leading-tight text-ink">
-              We are a Bible-believing, Holy Spirit, people and mission oriented church.
-            </h1>
-            <p className="text-base text-slate-600">
-              Oyarifa Worship Center is a Spirit-led community devoted to worship, discipleship, and
-              mission. Join us as we grow deeper in Christ and serve with compassion.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Button href="/live">Watch Live</Button>
-              <Button href="/give" variant="outline">
-                Give Online
-              </Button>
-              <Button href="/login" variant="outline">
-                Member Login
-              </Button>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-3xl bg-white/90 p-5 shadow-soft-md">
-                <p className="text-xs uppercase tracking-[0.3em] text-ember">Service Times</p>
-                <p className="mt-2 text-sm text-slate-600">Sundays • 9:00 AM & 11:00 AM</p>
-                <p className="text-sm text-slate-600">Wednesdays • 7:00 PM</p>
+      <section className="relative overflow-hidden bg-slate-950">
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/80 to-slate-900" />
+        <div className="relative mx-auto max-w-6xl px-4 py-16 md:py-20">
+          <div className="rounded-[2.5rem] bg-slate-900/70 p-4 shadow-soft-xl">
+            {homeVideoUrl ? (
+              <div className="relative aspect-video rounded-[2rem] overflow-hidden">
+                <iframe
+                  title="Welcome video"
+                  src={homeVideoUrl}
+                  className="h-full w-full"
+                  allowFullScreen
+                  loading="lazy"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-indigo-900/40" />
+                <div className="pointer-events-none absolute inset-x-6 bottom-6 flex items-center gap-4 text-white">
+                  <div className="h-12 w-12 rounded-full bg-white/20 border border-white/40 flex items-center justify-center">
+                    <span className="ml-1 text-lg">▶</span>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.3em] text-white/80">Welcome video</p>
+                    <p className="font-display text-2xl">A message of hope and purpose</p>
+                  </div>
+                </div>
               </div>
-              <div className="rounded-3xl bg-white/90 p-5 shadow-soft-md">
-                <p className="text-xs uppercase tracking-[0.3em] text-ember">Location</p>
-                <p className="mt-2 text-sm text-slate-600">Oyarifa Worship Center</p>
-                <p className="text-sm text-slate-600">Accra, Ghana</p>
+            ) : (
+              <div className="aspect-video rounded-[2rem] border border-slate-700 bg-slate-900 flex items-center justify-center text-sm text-slate-300">
+                Add `NEXT_PUBLIC_HOME_VIDEO_URL` to show the welcome video.
               </div>
-            </div>
+            )}
           </div>
-          <div className="relative">
-            <HeroMedia />
-            <div className="absolute -bottom-8 -left-6 h-32 w-32 rounded-full bg-ember/20 blur-2xl animate-float" />
+          <div className="mt-10 grid gap-6 md:grid-cols-3 text-white">
+            <div className="rounded-3xl bg-white/5 p-5">
+              <p className="text-xs uppercase tracking-[0.3em] text-wheat">Service Times</p>
+              <p className="mt-2 text-sm text-slate-200">Sundays • 9:00 AM & 11:00 AM</p>
+              <p className="text-sm text-slate-300">Wednesdays • 7:00 PM</p>
+            </div>
+            <div className="rounded-3xl bg-white/5 p-5">
+              <p className="text-xs uppercase tracking-[0.3em] text-wheat">Location</p>
+              <p className="mt-2 text-sm text-slate-200">Oyarifa Worship Center</p>
+              <p className="text-sm text-slate-300">Accra, Ghana</p>
+            </div>
+            <div className="rounded-3xl bg-white/5 p-5">
+              <p className="text-xs uppercase tracking-[0.3em] text-wheat">Get Connected</p>
+              <p className="mt-2 text-sm text-slate-200">Join a ministry or small group.</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <Button href="/contact" variant="outline" className="border-white text-white hover:bg-white hover:text-slate-950">
+                  Visit Us
+                </Button>
+                <Button href="/give" variant="outline" className="border-white text-white hover:bg-white hover:text-slate-950">
+                  Give
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
