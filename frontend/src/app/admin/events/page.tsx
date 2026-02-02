@@ -34,10 +34,10 @@ export default function AdminEventsPage() {
       createEvent(
         {
           ...form,
-          description: form.description || null,
-          start_time: fromDateTimeLocal(form.start_time),
-          end_time: form.end_time ? fromDateTimeLocal(form.end_time) : null,
-          cover_image_id: form.cover_image_id ? Number(form.cover_image_id) : null
+          description: form.description || undefined,
+          start_time: fromDateTimeLocal(form.start_time) || undefined,
+          end_time: form.end_time ? fromDateTimeLocal(form.end_time) || undefined : undefined,
+          cover_image_id: form.cover_image_id ? Number(form.cover_image_id) : undefined
         },
         token || ""
       ),
@@ -61,10 +61,10 @@ export default function AdminEventsPage() {
         editingId as number,
         {
           ...editForm,
-          description: editForm.description || null,
-          start_time: fromDateTimeLocal(editForm.start_time),
-          end_time: editForm.end_time ? fromDateTimeLocal(editForm.end_time) : null,
-          cover_image_id: editForm.cover_image_id ? Number(editForm.cover_image_id) : null
+          description: editForm.description || undefined,
+          start_time: fromDateTimeLocal(editForm.start_time) || undefined,
+          end_time: editForm.end_time ? fromDateTimeLocal(editForm.end_time) || undefined : undefined,
+          cover_image_id: editForm.cover_image_id ? Number(editForm.cover_image_id) : undefined
         },
         token || ""
       ),
