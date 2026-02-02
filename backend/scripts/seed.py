@@ -41,107 +41,120 @@ def seed_site_content(db, media_ids, force=False):
     return content
 
 
-def seed_sermons(db, media_ids, force=False):
-    if db.query(Sermon).count() > 0 and not force:
+def seed_sermons(db, media_ids, force=False, count=6):
+    if force:
+        db.query(Sermon).delete()
+        db.flush()
+
+    existing = db.query(Sermon).count()
+    needed = max(0, count - existing)
+    if needed == 0:
         return []
 
     today = date.today()
-    sermons = [
-        Sermon(
-            title="Anchored in Hope",
-            speaker="Ps. Daniel Asante",
-            sermon_date=today - timedelta(days=7),
-            scripture="Hebrews 6:19",
-            description="A call to trust God in every season.",
-            video_url=None,
-            audio_url=None,
-            thumbnail_media_id=media_ids[4] if len(media_ids) > 4 else None,
-        ),
-        Sermon(
-            title="Walking in the Spirit",
-            speaker="Ps. Grace Owusu",
-            sermon_date=today - timedelta(days=14),
-            scripture="Galatians 5:25",
-            description="Living a Spirit-led life daily.",
-            video_url=None,
-            audio_url=None,
-            thumbnail_media_id=media_ids[5] if len(media_ids) > 5 else None,
-        ),
-        Sermon(
-            title="Faith for the Journey",
-            speaker="Ps. Michael Boateng",
-            sermon_date=today - timedelta(days=21),
-            scripture="2 Corinthians 5:7",
-            description="Trusting God step by step.",
-            video_url=None,
-            audio_url=None,
-            thumbnail_media_id=media_ids[6] if len(media_ids) > 6 else None,
-        ),
+    templates = [
+        ("Anchored in Hope", "Ps. Daniel Asante", "Hebrews 6:19", "A call to trust God in every season."),
+        ("Walking in the Spirit", "Ps. Grace Owusu", "Galatians 5:25", "Living a Spirit-led life daily."),
+        ("Faith for the Journey", "Ps. Michael Boateng", "2 Corinthians 5:7", "Trusting God step by step."),
+        ("Grace That Sustains", "Ps. Lydia Mensah", "2 Corinthians 12:9", "Depending on grace every day."),
+        ("Kingdom Builders", "Ps. Joshua Kusi", "Matthew 6:33", "Seeking God's kingdom first."),
+        ("Victory in Prayer", "Ps. Esther Bediako", "Philippians 4:6", "A life shaped by prayer."),
     ]
+
+    sermons = []
+    for i in range(needed):
+        title, speaker, scripture, description = templates[i % len(templates)]
+        media_id = media_ids[(i + 4) % len(media_ids)] if media_ids else None
+        sermons.append(
+            Sermon(
+                title=title,
+                speaker=speaker,
+                sermon_date=today - timedelta(days=7 * (i + 1)),
+                scripture=scripture,
+                description=description,
+                video_url=None,
+                audio_url=None,
+                thumbnail_media_id=media_id,
+            )
+        )
     db.add_all(sermons)
+    db.flush()
     return sermons
 
 
-def seed_events(db, media_ids, force=False):
-    if db.query(Event).count() > 0 and not force:
+def seed_events(db, media_ids, force=False, count=6):
+    if force:
+        db.query(Event).delete()
+        db.flush()
+
+    existing = db.query(Event).count()
+    needed = max(0, count - existing)
+    if needed == 0:
         return []
 
     now = datetime.utcnow()
-    events = [
-        Event(
-            title="Sunday Worship Experience",
-            description="Join us for worship and the Word.",
-            location="Oyarifa Worship Center",
-            start_time=now + timedelta(days=3),
-            end_time=now + timedelta(days=3, hours=2),
-            cover_image_id=media_ids[7] if len(media_ids) > 7 else None,
-            is_public=True,
-        ),
-        Event(
-            title="Midweek Prayer Service",
-            description="Corporate prayer and encouragement.",
-            location="Oyarifa Worship Center",
-            start_time=now + timedelta(days=6),
-            end_time=now + timedelta(days=6, hours=2),
-            cover_image_id=media_ids[8] if len(media_ids) > 8 else None,
-            is_public=True,
-        ),
-        Event(
-            title="Community Outreach",
-            description="Serving our neighbors with love.",
-            location="Community Grounds",
-            start_time=now + timedelta(days=10),
-            end_time=now + timedelta(days=10, hours=3),
-            cover_image_id=media_ids[9] if len(media_ids) > 9 else None,
-            is_public=True,
-        ),
+    templates = [
+        ("Sunday Worship Experience", "Join us for worship and the Word.", "Oyarifa Worship Center"),
+        ("Midweek Prayer Service", "Corporate prayer and encouragement.", "Oyarifa Worship Center"),
+        ("Community Outreach", "Serving our neighbors with love.", "Community Grounds"),
+        ("Youth Encounter", "A gathering for students and young adults.", "Oyarifa Worship Center"),
+        ("Women of Grace", "Encouragement and fellowship for women.", "Oyarifa Worship Center"),
+        ("Men of Valor", "Brotherhood, discipleship, and worship.", "Oyarifa Worship Center"),
     ]
+
+    events = []
+    for i in range(needed):
+        title, description, location = templates[i % len(templates)]
+        media_id = media_ids[(i + 1) % len(media_ids)] if media_ids else None
+        start = now + timedelta(days=3 + i * 3)
+        events.append(
+            Event(
+                title=title,
+                description=description,
+                location=location,
+                start_time=start,
+                end_time=start + timedelta(hours=2),
+                cover_image_id=media_id,
+                is_public=True,
+            )
+        )
     db.add_all(events)
+    db.flush()
     return events
 
 
-def seed_announcements(db, force=False):
-    if db.query(Announcement).count() > 0 and not force:
+def seed_announcements(db, force=False, count=4):
+    if force:
+        db.query(Announcement).delete()
+        db.flush()
+
+    existing = db.query(Announcement).count()
+    needed = max(0, count - existing)
+    if needed == 0:
         return []
 
     today = date.today()
-    announcements = [
-        Announcement(
-            title="Welcome to Worship",
-            body="We are glad you are here. Join a small group this week.",
-            start_date=today,
-            end_date=today + timedelta(days=14),
-            is_active=True,
-        ),
-        Announcement(
-            title="Baptism Sunday",
-            body="Register to be baptized during next month’s service.",
-            start_date=today + timedelta(days=7),
-            end_date=today + timedelta(days=21),
-            is_active=True,
-        ),
+    templates = [
+        ("Welcome to Worship", "We are glad you are here. Join a small group this week."),
+        ("Baptism Sunday", "Register to be baptized during next month’s service."),
+        ("Volunteer Training", "Sign up for the next serve team onboarding."),
+        ("Prayer Week", "Join us for a week of focused prayer and fasting."),
     ]
+
+    announcements = []
+    for i in range(needed):
+        title, body = templates[i % len(templates)]
+        announcements.append(
+            Announcement(
+                title=title,
+                body=body,
+                start_date=today + timedelta(days=i * 7),
+                end_date=today + timedelta(days=i * 7 + 14),
+                is_active=True,
+            )
+        )
     db.add_all(announcements)
+    db.flush()
     return announcements
 
 
@@ -174,15 +187,19 @@ def main():
         media_ids = [item.id for item in media]
 
         site_content = seed_site_content(db, media_ids, force=args.force)
-        sermons = seed_sermons(db, media_ids, force=args.force)
-        events = seed_events(db, media_ids, force=args.force)
-        announcements = seed_announcements(db, force=args.force)
+        sermons = seed_sermons(db, media_ids, force=args.force, count=6)
+        events = seed_events(db, media_ids, force=args.force, count=6)
+        announcements = seed_announcements(db, force=args.force, count=4)
         livestream = seed_livestream(db, media_ids, force=args.force)
 
-        if site_content.featured_sermon_id is None and sermons:
-            site_content.featured_sermon_id = sermons[0].id
-        if site_content.featured_event_id is None and events:
-            site_content.featured_event_id = events[0].id
+        if site_content.featured_sermon_id is None:
+            sermon_pick = sermons[0] if sermons else db.query(Sermon).first()
+            if sermon_pick:
+                site_content.featured_sermon_id = sermon_pick.id
+        if site_content.featured_event_id is None:
+            event_pick = events[0] if events else db.query(Event).first()
+            if event_pick:
+                site_content.featured_event_id = event_pick.id
         site_content.updated_at = datetime.utcnow()
 
         db.commit()
