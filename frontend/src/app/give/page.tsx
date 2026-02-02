@@ -109,7 +109,7 @@ export default function GivePage() {
             </p>
           </div>
           <div className="rounded-3xl bg-white/80 p-8 shadow-soft-md text-sm text-slate-600 space-y-2">
-            <p>Need help with giving? Email finance@covenantofpraise.org.</p>
+            <p>Need help with giving? Email finance@thechurchofpentecost.org.</p>
             <p>Looking for year-end statements? Log in to your member portal (coming soon).</p>
           </div>
         </div>

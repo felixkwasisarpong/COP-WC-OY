@@ -13,7 +13,7 @@ export default function ContactPage() {
         <div className="space-y-4 text-slate-600">
           <p>123 Grace Avenue, City, State 00000</p>
           <p>(555) 555-1234</p>
-          <p>hello@covenantofpraise.org</p>
+          <p>info@thechurchofpentecost.org</p>
           <div className="rounded-3xl bg-white/80 p-6 shadow-soft-md">
             <p className="text-xs uppercase tracking-[0.3em] text-ember">Office Hours</p>
             <p className="mt-2 text-sm">Mon - Thu: 9:00 AM - 4:00 PM</p>

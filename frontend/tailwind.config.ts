@@ -5,20 +5,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#0b0a0a",
-        ember: "#b84c2a",
-        clay: "#c97a5a",
-        wheat: "#f3e8d8",
-        sage: "#5b6d5b",
-        mist: "#f8f3ee"
+        ink: "#0b1f3b",
+        ember: "#1f5fa8",
+        clay: "#2f77c7",
+        wheat: "#f2c94c",
+        sage: "#14345a",
+        mist: "#eef5ff"
       },
       fontFamily: {
         display: ["var(--font-display)", "serif"],
         sans: ["var(--font-sans)", "sans-serif"]
       },
       backgroundImage: {
-        "hero-glow": "radial-gradient(circle at top left, rgba(184,76,42,0.35), transparent 55%)",
-        "warm-gradient": "linear-gradient(135deg, #f8f3ee 0%, #f3e8d8 40%, #fdfaf5 100%)"
+        "hero-glow": "radial-gradient(circle at top left, rgba(31,95,168,0.35), transparent 55%)",
+        "warm-gradient": "linear-gradient(135deg, #eef5ff 0%, #f2c94c 35%, #ffffff 100%)"
       },
       boxShadow: {
         "soft-xl": "0 20px 40px rgba(16, 15, 10, 0.15)",

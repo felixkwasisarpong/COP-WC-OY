@@ -18,8 +18,8 @@ const sans = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Covenant of Praise Church",
-  description: "A warm and modern church home for worship, community, and service."
+  title: "The Church of Pentecost — Oyarifa Worship Center",
+  description: "A welcoming church home for worship, community, and service."
 };
 
 export default function RootLayout({
