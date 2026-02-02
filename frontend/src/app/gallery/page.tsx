@@ -7,7 +7,7 @@ import { SectionHeading } from "@/components/section-heading";
 export default function GalleryPage() {
   const { data, isLoading } = useQuery({
     queryKey: ["media"],
-    queryFn: fetchMedia
+    queryFn: () => fetchMedia()
   });
 
   return (
