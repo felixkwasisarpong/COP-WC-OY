@@ -20,6 +20,8 @@ export default function AdminMediaPage() {
   const [isPublic, setIsPublic] = useState(true);
   const [downloadsEnabled, setDownloadsEnabled] = useState(true);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [bulkLoading, setBulkLoading] = useState(false);
+  const [bulkError, setBulkError] = useState<string | null>(null);
 
   const uploadMutation = useMutation({
     mutationFn: async () => {
@@ -57,6 +59,22 @@ export default function AdminMediaPage() {
     mutationFn: ({ id, payload }: { id: number; payload: any }) => updateMedia(id, payload, token || ""),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin-media"] })
   });
+
+  const applyBulkUpdate = async (payload: Record<string, any>) => {
+    if (!data?.items?.length || !token) return;
+    setBulkLoading(true);
+    setBulkError(null);
+    try {
+      for (const item of data.items) {
+        await updateMedia(item.id, payload, token);
+      }
+      queryClient.invalidateQueries({ queryKey: ["admin-media"] });
+    } catch (error) {
+      setBulkError("Bulk update failed. Please try again.");
+    } finally {
+      setBulkLoading(false);
+    }
+  };
 
   const handleDownload = async (id: number, filename: string) => {
     if (!token) return;
@@ -119,6 +137,22 @@ export default function AdminMediaPage() {
 
       <div className="space-y-4">
         <h3 className="font-display text-xl text-ink">Library</h3>
+        <div className="flex flex-wrap gap-3">
+          <button
+            onClick={() => applyBulkUpdate({ is_public: true })}
+            className="rounded-full border border-ember px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember"
+          >
+            Make all public
+          </button>
+          <button
+            onClick={() => applyBulkUpdate({ downloads_enabled: true })}
+            className="rounded-full border border-ember px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember"
+          >
+            Enable all downloads
+          </button>
+          {bulkLoading && <span className="text-xs text-slate-500">Updating...</span>}
+          {bulkError && <span className="text-xs text-ember">{bulkError}</span>}
+        </div>
         {isLoading ? (
           <p className="text-sm text-slate-600">Loading media...</p>
         ) : (

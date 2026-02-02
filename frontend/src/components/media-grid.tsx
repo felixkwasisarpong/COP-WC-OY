@@ -20,7 +20,7 @@ export function MediaGrid({ items }: { items: any[] }) {
   return (
     <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {items.map((media) => (
-        <div key={media.id} className="group rounded-3xl bg-white/90 p-4 shadow-soft-md">
+        <div key={media.id} className="rounded-3xl bg-white/90 p-4 shadow-soft-md">
           <div className="relative h-44 rounded-2xl overflow-hidden bg-mist">
             <img
               src={mediaViewUrl(media.id)}
@@ -28,25 +28,25 @@ export function MediaGrid({ items }: { items: any[] }) {
               className="h-full w-full object-cover"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent opacity-0 group-hover:opacity-100 transition" />
-            <div className="absolute inset-x-4 bottom-4 flex items-center gap-3 opacity-0 group-hover:opacity-100 transition">
-              <a
-                href={mediaViewUrl(media.id)}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-full bg-white/90 px-4 py-2 text-xs uppercase tracking-[0.3em] text-ink"
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/40 to-transparent" />
+          </div>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <a
+              href={mediaViewUrl(media.id)}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full border border-ember px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember"
+            >
+              Preview
+            </a>
+            {token && media.downloads_enabled && (
+              <button
+                onClick={() => handleDownload(media.id, media.filename)}
+                className="rounded-full bg-ember px-4 py-2 text-xs uppercase tracking-[0.3em] text-white"
               >
-                Preview
-              </a>
-              {token && media.downloads_enabled && (
-                <button
-                  onClick={() => handleDownload(media.id, media.filename)}
-                  className="rounded-full bg-ember px-4 py-2 text-xs uppercase tracking-[0.3em] text-white"
-                >
-                  Download
-                </button>
-              )}
-            </div>
+                Download
+              </button>
+            )}
           </div>
           {media.description && <p className="mt-3 text-xs text-slate-500">{media.description}</p>}
         </div>

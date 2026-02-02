@@ -18,11 +18,11 @@ export default function HomePage() {
           <div className="space-y-6 animate-fade-up">
             <p className="text-xs uppercase tracking-[0.4em] text-ember">The Church of Pentecost</p>
             <h1 className="font-display text-4xl md:text-5xl leading-tight text-ink">
-              Oyarifa Worship Center
+              We are a Bible-believing, Holy Spirit, people and mission oriented church.
             </h1>
             <p className="text-base text-slate-600">
-              A Spirit-led community devoted to worship, discipleship, and mission. Join us as we
-              grow deeper in Christ and serve with compassion.
+              Oyarifa Worship Center is a Spirit-led community devoted to worship, discipleship, and
+              mission. Join us as we grow deeper in Christ and serve with compassion.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button href="/live">Watch Live</Button>
@@ -51,15 +51,6 @@ export default function HomePage() {
             <div className="absolute -bottom-8 -left-6 h-32 w-32 rounded-full bg-ember/20 blur-2xl animate-float" />
           </div>
         </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 space-y-10">
-        <SectionHeading
-          eyebrow="Featured"
-          title="Highlighted for this season"
-          description="Admin-selected sermon and event highlights for the church family."
-        />
-        <FeaturedContent />
       </section>
 
       <section className="mx-auto max-w-6xl px-4 space-y-10">
@@ -116,6 +107,26 @@ export default function HomePage() {
           title="What we believe"
           description="The foundations that shape our worship, community, and mission."
         />
+        <div className="grid gap-8 md:grid-cols-[1fr_1.2fr] items-start">
+          <div className="rounded-3xl bg-white/90 p-6 shadow-soft-md space-y-4">
+            <p className="text-xs uppercase tracking-[0.3em] text-ember">Our Tenets</p>
+            <p className="text-sm text-slate-600">
+              Discover the foundational beliefs that guide our worship and doctrine.
+            </p>
+            <Button href="/about" variant="outline">
+              Read Tenets
+            </Button>
+          </div>
+          <Tenets />
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 space-y-10">
+        <SectionHeading
+          eyebrow="Our Tenets"
+          title="What we believe"
+          description="The foundations that shape our worship, community, and mission."
+        />
         <Tenets />
       </section>
 
@@ -124,20 +135,26 @@ export default function HomePage() {
           {[
             {
               title: "Our Vision",
-              body: "To become a global Pentecostal church that is culturally relevant in vibrant evangelism, church planting, discipleship and holistic ministry."
+              body: "To become a global Pentecostal church that is culturally relevant in vibrant evangelism, church planting, discipleship and holistic ministry.",
+              action: "See the vision"
             },
             {
               title: "Our Mission",
-              body: "To bring all people to the saving knowledge of Christ and to discipleship, through the proclamation of the gospel, prayer, and service."
+              body: "To bring all people to the saving knowledge of Christ and to discipleship through the proclamation of the gospel, prayer, and service.",
+              action: "Dive in"
             },
             {
               title: "Core Values",
-              body: "Prayer, holiness, evangelism, discipleship, stewardship, and servant leadership."
+              body: "Prayer, holiness, evangelism, discipleship, stewardship, and servant leadership.",
+              action: "Discover"
             }
           ].map((card) => (
-            <div key={card.title} className="rounded-3xl bg-white/90 p-6 shadow-soft-md">
+            <div key={card.title} className="rounded-3xl bg-white/90 p-6 shadow-soft-md space-y-3">
               <p className="text-xs uppercase tracking-[0.3em] text-ember">{card.title}</p>
-              <p className="mt-3 text-sm text-slate-600">{card.body}</p>
+              <p className="text-sm text-slate-600">{card.body}</p>
+              <Button href="/about" variant="outline">
+                {card.action}
+              </Button>
             </div>
           ))}
         </div>
@@ -158,20 +175,45 @@ export default function HomePage() {
           title="Explore the life of the church"
           description="Discover ministries, gatherings, and resources to help you grow."
         />
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-4">
           {[
-            { title: "Join us", body: "Plan your visit and worship with us this Sunday.", href: "/contact" },
-            { title: "Ministries", body: "Find a ministry for every season and generation.", href: "/ministries" },
-            { title: "Know our leaders", body: "Meet the pastors and ministry leaders.", href: "/leadership" },
-            { title: "Get resources", body: "Watch sermons and access teaching materials.", href: "/sermons" },
-            { title: "Give", body: "Partner with us in kingdom impact.", href: "/give" },
-            { title: "Have questions?", body: "We are here to help you take your next step.", href: "/contact" }
+            { title: "Explore Ministries", body: "Find a ministry for every season and generation.", href: "/ministries" },
+            { title: "Join Us", body: "Plan your visit and worship with us this Sunday.", href: "/contact" },
+            { title: "Get Resources", body: "Watch sermons and access teaching materials.", href: "/sermons" },
+            { title: "Know Our Leaders", body: "Meet the pastors and ministry leaders.", href: "/leadership" }
           ].map((card) => (
             <div key={card.title} className="rounded-3xl bg-white/90 p-6 shadow-soft-md">
               <p className="text-xs uppercase tracking-[0.3em] text-ember">{card.title}</p>
               <p className="mt-3 text-sm text-slate-600">{card.body}</p>
               <Button href={card.href} variant="outline" className="mt-4">
                 Learn more
+              </Button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 space-y-10">
+        <div className="grid gap-6 md:grid-cols-2">
+          {[
+            {
+              title: "Give towards the work of God",
+              body: "Partner with us in kingdom impact through your generosity.",
+              href: "/give",
+              action: "Give now"
+            },
+            {
+              title: "Have Questions?",
+              body: "We are here to help you take your next step.",
+              href: "/contact",
+              action: "Reach out"
+            }
+          ].map((card) => (
+            <div key={card.title} className="rounded-[2.5rem] bg-mist border border-wheat p-8 shadow-soft-md">
+              <p className="text-xs uppercase tracking-[0.3em] text-ember">{card.title}</p>
+              <p className="mt-3 text-sm text-slate-600">{card.body}</p>
+              <Button href={card.href} variant="outline" className="mt-4">
+                {card.action}
               </Button>
             </div>
           ))}
@@ -189,12 +231,37 @@ export default function HomePage() {
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <Button href="/contact">Reach out</Button>
-            <Button href="/about" variant="outline">
-              Learn more
+            <Button href="/contact">Accept Jesus</Button>
+            <Button href="/contact" variant="outline">
+              Reach out
             </Button>
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 space-y-10">
+        <div className="grid gap-6 md:grid-cols-4">
+          {[
+            { title: "Pentecost Biblical Seminary", body: "Training leaders for ministry." },
+            { title: "National Calendar of Events", body: "Stay updated on upcoming gatherings." },
+            { title: "Prayer Request", body: "Submit a prayer request for our team." },
+            { title: "Missions & Urban Outreach", body: "Serving communities with the gospel." }
+          ].map((card) => (
+            <div key={card.title} className="rounded-3xl bg-white/90 p-5 shadow-soft-md">
+              <p className="text-xs uppercase tracking-[0.3em] text-ember">{card.title}</p>
+              <p className="mt-3 text-sm text-slate-600">{card.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 space-y-10">
+        <SectionHeading
+          eyebrow="Featured"
+          title="Highlighted for this season"
+          description="Admin-selected sermon and event highlights for the church family."
+        />
+        <FeaturedContent />
       </section>
 
       <section className="mx-auto max-w-6xl px-4 space-y-10">

@@ -7,7 +7,7 @@ export default function AboutPage() {
       <SectionHeading
         eyebrow="About us"
         title="The Church of Pentecost — Oyarifa Worship Center"
-        description="A Bible-believing, Holy Spirit, people and mission oriented church."
+        description="We are a Bible-believing, Holy Spirit, people and mission oriented church."
       />
       <div className="grid gap-10 md:grid-cols-2 items-center">
         <div className="space-y-4 text-slate-600">
@@ -21,17 +21,17 @@ export default function AboutPage() {
           </p>
           <div className="grid gap-4 text-sm text-slate-600">
             <div>
-              <span className="text-xs uppercase tracking-[0.3em] text-ember">Vision</span>
+              <span className="text-xs uppercase tracking-[0.3em] text-ember">Mission</span>
               <p className="mt-2">
-                To become a global Pentecostal church that is culturally relevant in vibrant evangelism,
-                church planting, discipleship, and holistic ministry.
+                We exist to establish responsible and self-sustaining churches filled with committed,
+                Spirit-filled Christians of character, who will impact their communities.
               </p>
             </div>
             <div>
-              <span className="text-xs uppercase tracking-[0.3em] text-ember">Mission</span>
+              <span className="text-xs uppercase tracking-[0.3em] text-ember">Vision</span>
               <p className="mt-2">
-                To establish responsible, self-sustaining churches filled with committed, Spirit-filled
-                believers who impact their communities.
+                To become a global Pentecostal church that is culturally relevant in vibrant evangelism,
+                church planting, discipleship and holistic ministry.
               </p>
             </div>
           </div>
@@ -40,12 +40,18 @@ export default function AboutPage() {
           <PageImage kind="about" fallback="Our community" />
           <div className="rounded-[2.5rem] bg-white/90 p-8 shadow-soft-xl">
             <div className="rounded-[2rem] bg-mist p-8 space-y-4">
-              <h3 className="font-display text-2xl">Core values</h3>
-              <div className="grid gap-3 text-sm text-slate-600">
-                <div>Prayer and dependence on the Holy Spirit</div>
-                <div>Holiness and integrity</div>
-                <div>Evangelism and discipleship</div>
-                <div>Stewardship and servant leadership</div>
+              <h3 className="font-display text-2xl">Our Tenets & Core Beliefs</h3>
+              <p className="text-sm text-slate-600">
+                Our tenets form the foundation of our doctrine, while our core beliefs shape how we
+                live, serve, and worship.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Button href="/about" variant="outline">
+                  Go to Tenets
+                </Button>
+                <Button href="/about" variant="outline">
+                  Go to Core Beliefs
+                </Button>
               </div>
             </div>
           </div>
