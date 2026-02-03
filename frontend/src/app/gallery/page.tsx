@@ -20,9 +20,16 @@ export default function GalleryPage() {
     const seen = new Set<string>();
     const titles: string[] = [];
     for (const item of sortedItems) {
-      if (item.title && !seen.has(item.title)) {
-        seen.add(item.title);
-        titles.push(item.title);
+      const title = item.title?.trim();
+      if (!title) {
+        continue;
+      }
+      if (title === item.filename) {
+        continue;
+      }
+      if (!seen.has(title)) {
+        seen.add(title);
+        titles.push(title);
       }
       if (titles.length === 3) break;
     }
