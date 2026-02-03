@@ -6,6 +6,7 @@ from app.models.announcement import Announcement
 from app.models.media import MediaAsset
 from app.models.livestream import LivestreamConfig
 from app.models.site_content import SiteContent
+from app.models.leader import Leader
 
 __all__ = [
     "Base",
@@ -17,4 +18,5 @@ __all__ = [
     "MediaAsset",
     "LivestreamConfig",
     "SiteContent",
+    "Leader",
 ]
