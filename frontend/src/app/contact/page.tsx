@@ -11,8 +11,8 @@ export default function ContactPage() {
       />
       <div className="grid gap-10 md:grid-cols-2">
         <div className="space-y-4 text-slate-600">
-          <p>123 Grace Avenue, City, State 00000</p>
-          <p>(555) 555-1234</p>
+          <p># 2 Pentecost lane Oyarifa-Teiman, Ghana</p>
+          <p>+233 24 288 5908</p>
           <p>info@thechurchofpentecost.org</p>
           <div className="rounded-none bg-white/80 p-6 shadow-soft-md">
             <p className="text-xs uppercase tracking-[0.3em] text-ember">Office Hours</p>
@@ -24,7 +24,7 @@ export default function ContactPage() {
         <div className="rounded-none overflow-hidden shadow-soft-xl">
           <iframe
             title="Church location map"
-            src="https://maps.google.com/maps?q=church&t=&z=13&ie=UTF8&iwloc=&output=embed"
+            src="https://maps.google.com/maps?ll=5.756235,-0.1816407&z=15&t=&hl=en&gl=GH&mapclient=embed&q=C.O.P.%20Oyarifa%20Worship%20Centre"
             className="w-full h-80"
             loading="lazy"
           />

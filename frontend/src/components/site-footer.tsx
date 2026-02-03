@@ -16,10 +16,9 @@ export function SiteFooter() {
         <div>
           <h4 className="font-display text-lg">Visit</h4>
           <ul className="mt-3 space-y-2 text-sm text-slate-600">
-            <li>123 Grace Avenue</li>
-            <li>City, State 00000</li>
+            <li># 2 Pentecost lane Oyarifa-Teiman, Ghana</li>
             <li>info@thechurchofpentecost.org</li>
-            <li>(555) 555-1234</li>
+            <li>+233 24 288 5908</li>
           </ul>
         </div>
         <div>
