@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AdminShell } from "@/components/admin-shell";
 import { downloadMedia, fetchMedia, mediaViewUrl, updateMedia, uploadMedia } from "@/services/media";
+import { Download, Eye } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 
 export default function AdminMediaPage() {
@@ -156,22 +157,46 @@ export default function AdminMediaPage() {
         {isLoading ? (
           <p className="text-sm text-slate-600">Loading media...</p>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
             {(data?.items || []).map((media: any) => (
-              <div key={media.id} className="rounded-[2rem] bg-white/90 p-5 shadow-soft-md space-y-3">
-                {media.content_type?.startsWith("image/") ? (
-                  <img
-                    src={mediaViewUrl(media.id)}
-                    alt={media.title}
-                    className="h-40 w-full rounded-2xl object-cover"
-                  />
-                ) : (
-                  <div className="h-40 rounded-2xl bg-hero-glow flex items-center justify-center text-ember">
-                    {media.filename}
+              <div key={media.id} className="space-y-3">
+                <div className="group relative h-44 overflow-hidden bg-mist">
+                  {media.content_type?.startsWith("image/") ? (
+                    <img
+                      src={mediaViewUrl(media.id)}
+                      alt={media.title}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="h-full w-full bg-hero-glow flex items-center justify-center text-ember">
+                      {media.filename}
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-transparent group-hover:bg-slate-950/35 transition" />
+                  <div className="absolute inset-x-3 bottom-3 flex items-center justify-between">
+                    <a
+                      href={mediaViewUrl(media.id)}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Preview image"
+                      className="text-white transition hover:text-wheat"
+                    >
+                      <Eye className="h-5 w-5" />
+                    </a>
+                    <button
+                      onClick={() => handleDownload(media.id, media.filename)}
+                      aria-label="Download image"
+                      disabled={!media.downloads_enabled}
+                      className={`transition ${
+                        media.downloads_enabled ? "text-white hover:text-wheat" : "text-white/40 cursor-not-allowed"
+                      }`}
+                    >
+                      <Download className="h-5 w-5" />
+                    </button>
                   </div>
-                )}
+                </div>
                 <div>
-                  <h4 className="font-display text-xl text-ink">{media.title}</h4>
+                  <h4 className="font-display text-lg text-ink">{media.title}</h4>
                 </div>
                 <div className="flex flex-wrap gap-4 text-sm text-slate-600">
                   <label className="flex items-center gap-2">
@@ -197,27 +222,6 @@ export default function AdminMediaPage() {
                     />
                     Downloads
                   </label>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <a
-                    href={mediaViewUrl(media.id)}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-full border border-ember px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember"
-                  >
-                    Preview
-                  </a>
-                  <button
-                    onClick={() => handleDownload(media.id, media.filename)}
-                    disabled={!media.downloads_enabled}
-                    className={`rounded-full border px-4 py-2 text-xs uppercase tracking-[0.3em] ${
-                      media.downloads_enabled
-                        ? "border-ember text-ember"
-                        : "border-slate-200 text-slate-400 cursor-not-allowed"
-                    }`}
-                  >
-                    Download
-                  </button>
                 </div>
               </div>
             ))}
