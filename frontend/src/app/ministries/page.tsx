@@ -22,7 +22,7 @@ export default function MinistriesPage() {
   const mediaId = data?.ministries_media_id as number | undefined | null;
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-16 space-y-14">
+    <div className="space-y-14">
       <div className="relative h-64 md:h-80 bg-ink overflow-hidden">
         {mediaId ? (
           <img
@@ -36,7 +36,7 @@ export default function MinistriesPage() {
         )}
         <div className="absolute inset-0 bg-slate-950/45" />
         <div className="absolute inset-0 flex items-center">
-          <div className="px-6 md:px-10 text-white space-y-3">
+          <div className="mx-auto w-full max-w-5xl px-6 md:px-10 text-white space-y-3">
             <p className="text-xs uppercase tracking-[0.3em] text-wheat">Ministries</p>
             <h1 className="font-display text-3xl md:text-4xl">Where every generation belongs</h1>
             <p className="max-w-xl text-sm text-white/80">
@@ -45,13 +45,15 @@ export default function MinistriesPage() {
           </div>
         </div>
       </div>
-      <div className="grid gap-6 md:grid-cols-2">
-        {ministries.map((ministry) => (
-          <div key={ministry.name} className="rounded-none border border-wheat bg-white/80 p-6 shadow-soft-md">
-            <h3 className="font-display text-2xl">{ministry.name}</h3>
-            <p className="mt-3 text-sm text-slate-600">{ministry.description}</p>
-          </div>
-        ))}
+      <div className="mx-auto max-w-5xl px-4">
+        <div className="grid gap-6 md:grid-cols-2">
+          {ministries.map((ministry) => (
+            <div key={ministry.name} className="rounded-none border border-wheat bg-white/80 p-6 shadow-soft-md">
+              <h3 className="font-display text-2xl">{ministry.name}</h3>
+              <p className="mt-3 text-sm text-slate-600">{ministry.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
