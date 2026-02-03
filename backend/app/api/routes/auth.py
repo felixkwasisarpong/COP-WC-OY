@@ -66,3 +66,11 @@ def login(payload: LoginRequest, db: Session = Depends(deps.get_db)) -> Token:
 @router.get("/me", response_model=UserOut)
 def read_users_me(current_user=Depends(deps.get_current_active_user)) -> UserOut:
     return current_user
+
+
+@router.get("/admins", response_model=list[UserOut])
+def list_admins(
+    db: Session = Depends(deps.get_db),
+    _: dict = Depends(deps.require_admin),
+) -> list[UserOut]:
+    return db.query(User).filter(User.role == UserRole.ADMIN).all()
