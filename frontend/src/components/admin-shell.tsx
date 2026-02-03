@@ -9,7 +9,8 @@ import {
   Megaphone,
   Image as ImageIcon,
   Radio,
-  Settings
+  Settings,
+  Users
 } from "lucide-react";
 import { clsx } from "clsx";
 import { useAuth } from "@/hooks/use-auth";
@@ -19,6 +20,7 @@ const navItems = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
   { href: "/admin/sermons", label: "Sermons", icon: BookOpen },
   { href: "/admin/events", label: "Events", icon: Calendar },
+  { href: "/admin/leadership", label: "Leadership", icon: Users },
   { href: "/admin/announcements", label: "Announcements", icon: Megaphone },
   { href: "/admin/media", label: "Media", icon: ImageIcon },
   { href: "/admin/livestream", label: "Livestream", icon: Radio },

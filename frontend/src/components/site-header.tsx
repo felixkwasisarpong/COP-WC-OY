@@ -5,6 +5,8 @@ import { useState } from "react";
 import { Facebook, Instagram, Mail, MapPin, Menu, Phone, Search, X, Youtube } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { usePathname } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { fetchSiteContent } from "@/services/site-content";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -19,6 +21,10 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuth();
   const pathname = usePathname();
+  const { data: siteContent } = useQuery({
+    queryKey: ["site-content"],
+    queryFn: fetchSiteContent
+  });
   const isHome = pathname === "/";
   const headerStyles = isHome
     ? "bg-slate-950/95 border-b border-slate-800"
@@ -53,22 +59,46 @@ export function SiteHeader() {
               <button type="button" aria-label="Search" className="hover:text-wheat">
                 <Search className="h-4 w-4" />
               </button>
-              <a href="#" aria-label="Facebook" className="hover:text-wheat">
-                <Facebook className="h-4 w-4" />
-              </a>
-              <a href="#" aria-label="Instagram" className="hover:text-wheat">
-                <Instagram className="h-4 w-4" />
-              </a>
-              <a href="#" aria-label="YouTube" className="hover:text-wheat">
-                <Youtube className="h-4 w-4" />
-              </a>
+              {siteContent?.social_facebook_url && (
+                <a
+                  href={siteContent.social_facebook_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Facebook"
+                  className="hover:text-wheat"
+                >
+                  <Facebook className="h-4 w-4" />
+                </a>
+              )}
+              {siteContent?.social_instagram_url && (
+                <a
+                  href={siteContent.social_instagram_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram"
+                  className="hover:text-wheat"
+                >
+                  <Instagram className="h-4 w-4" />
+                </a>
+              )}
+              {siteContent?.social_youtube_url && (
+                <a
+                  href={siteContent.social_youtube_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="YouTube"
+                  className="hover:text-wheat"
+                >
+                  <Youtube className="h-4 w-4" />
+                </a>
+              )}
             </div>
           </div>
         </div>
       )}
       <div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
-          <img src="/logo.svg" alt="The Church of Pentecost logo" className="h-10 w-10" />
+          <img src="/logo.png" alt="The Church of Pentecost logo" className="h-10 w-10" />
           <span className="font-display text-lg leading-tight">
             <span className={`block ${isHome ? "text-white" : "text-ink"}`}>The Church of Pentecost</span>
             <span

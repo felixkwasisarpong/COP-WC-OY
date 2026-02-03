@@ -7,11 +7,13 @@ import { fetchSermons } from "@/services/sermons";
 import { fetchEvents } from "@/services/events";
 import { fetchAnnouncements } from "@/services/announcements";
 import { fetchMedia } from "@/services/media";
+import { fetchLeaders } from "@/services/leaders";
 import { useAuth } from "@/hooks/use-auth";
 
 const adminCards = [
   { title: "Sermons", description: "Create, update, and publish sermon content.", href: "/admin/sermons" },
   { title: "Events", description: "Manage calendar listings and event details.", href: "/admin/events" },
+  { title: "Leadership", description: "Maintain leadership profiles and visibility.", href: "/admin/leadership" },
   { title: "Announcements", description: "Post announcements and homepage alerts.", href: "/admin/announcements" },
   { title: "Media Library", description: "Upload photos and manage downloads.", href: "/admin/media" },
   { title: "Livestream", description: "Update embed URLs and live status.", href: "/admin/livestream" },
@@ -26,6 +28,10 @@ export default function AdminDashboard() {
     queryKey: ["admin-announcements"],
     queryFn: () => fetchAnnouncements(token, false)
   });
+  const { data: leaders } = useQuery({
+    queryKey: ["admin-leaders"],
+    queryFn: () => fetchLeaders(token)
+  });
   const { data: media } = useQuery({
     queryKey: ["admin-media"],
     queryFn: () => fetchMedia(token)
@@ -37,12 +43,13 @@ export default function AdminDashboard() {
       subtitle="Manage sermons, events, announcements, and media in one place."
     >
       <div className="grid gap-4 md:grid-cols-4">
-        {[
-          { label: "Sermons", value: sermons?.total ?? 0 },
-          { label: "Events", value: events?.total ?? 0 },
-          { label: "Announcements", value: announcements?.total ?? 0 },
-          { label: "Media", value: media?.total ?? 0 }
-        ].map((stat) => (
+          {[
+            { label: "Sermons", value: sermons?.total ?? 0 },
+            { label: "Events", value: events?.total ?? 0 },
+            { label: "Leaders", value: leaders?.total ?? 0 },
+            { label: "Announcements", value: announcements?.total ?? 0 },
+            { label: "Media", value: media?.total ?? 0 }
+          ].map((stat) => (
           <div key={stat.label} className="rounded-3xl bg-white/90 p-5 shadow-soft-md">
             <p className="text-xs uppercase tracking-[0.3em] text-slate-400">{stat.label}</p>
             <p className="mt-3 font-display text-3xl text-ink">{stat.value}</p>

@@ -6,6 +6,7 @@ import { HeroMedia } from "@/components/home/hero-media";
 import { FeaturedContent } from "@/components/home/featured-content";
 import { Tenets } from "@/components/home/tenets";
 import { AnnouncementPreview } from "@/components/home/announcement-preview";
+import { InteractiveSocial } from "@/components/home/interactive-social";
 
 export default function HomePage() {
   const homeVideoUrl = process.env.NEXT_PUBLIC_HOME_VIDEO_URL;
@@ -169,6 +170,8 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      <InteractiveSocial />
 
       <section className="mx-auto max-w-6xl px-4 space-y-10">
         <div className="grid gap-6 md:grid-cols-2">

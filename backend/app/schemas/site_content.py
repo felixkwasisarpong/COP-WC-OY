@@ -9,6 +9,10 @@ class SiteContentBase(BaseModel):
     about_media_id: int | None = None
     ministries_media_id: int | None = None
     contact_media_id: int | None = None
+    social_facebook_url: str | None = None
+    social_instagram_url: str | None = None
+    social_youtube_url: str | None = None
+    social_tiktok_url: str | None = None
 
 
 class SiteContentUpdate(BaseModel):
@@ -18,6 +22,10 @@ class SiteContentUpdate(BaseModel):
     about_media_id: int | None = None
     ministries_media_id: int | None = None
     contact_media_id: int | None = None
+    social_facebook_url: str | None = None
+    social_instagram_url: str | None = None
+    social_youtube_url: str | None = None
+    social_tiktok_url: str | None = None
 
 
 class SiteContentOut(SiteContentBase):

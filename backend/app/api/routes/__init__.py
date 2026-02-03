@@ -1,4 +1,4 @@
-from app.api.routes import auth, announcements, events, health, livestream, media, sermons, giving, site_content
+from app.api.routes import auth, announcements, events, health, livestream, media, sermons, giving, site_content, leaders
 
 __all__ = [
     "auth",
@@ -10,4 +10,5 @@ __all__ = [
     "sermons",
     "giving",
     "site_content",
+    "leaders",
 ]

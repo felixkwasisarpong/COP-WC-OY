@@ -1,21 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMedia, mediaViewUrl } from "@/services/media";
 import { MediaGrid } from "@/components/media-grid";
 
-const categories = ["All Media", "HSC '23", "Relentless '21", "PENSA Makes an Impact"];
-
 export default function GalleryPage() {
-  const [activeCategory, setActiveCategory] = useState(categories[0]);
   const { data, isLoading } = useQuery({
     queryKey: ["media"],
     queryFn: () => fetchMedia()
   });
 
   const items = (data?.items || []) as any[];
-  const heroItems = items.slice(0, 3);
+  const sortedItems = useMemo(
+    () => [...items].sort((a, b) => new Date(b.uploaded_at).getTime() - new Date(a.uploaded_at).getTime()),
+    [items]
+  );
+  const recentTitles = useMemo(() => {
+    const seen = new Set<string>();
+    const titles: string[] = [];
+    for (const item of sortedItems) {
+      const title = item.title?.trim();
+      if (!title) {
+        continue;
+      }
+      if (title === item.filename) {
+        continue;
+      }
+      if (!seen.has(title)) {
+        seen.add(title);
+        titles.push(title);
+      }
+      if (titles.length === 3) break;
+    }
+    return titles;
+  }, [sortedItems]);
+
+  const categories = ["All Media", ...recentTitles];
+  const [activeCategory, setActiveCategory] = useState("All Media");
+  const filteredItems =
+    activeCategory === "All Media"
+      ? items
+      : items.filter((item) => item.title === activeCategory);
+
+  const heroItems = sortedItems.slice(0, 3);
 
   return (
     <div className="bg-white">
@@ -71,7 +99,7 @@ export default function GalleryPage() {
         {isLoading ? (
           <p className="text-center text-sm text-slate-500">Loading gallery...</p>
         ) : (
-          <MediaGrid items={items} rounded={false} />
+          <MediaGrid items={filteredItems} rounded={false} />
         )}
       </div>
     </div>

@@ -46,7 +46,7 @@ export default function GivePage() {
           <div>
             <label className="text-xs uppercase tracking-[0.3em] text-ember">Amount</label>
             <div className="mt-3 flex items-center gap-3">
-              <span className="text-2xl font-display text-ember">$</span>
+              <span className="text-2xl font-display text-ember">₵</span>
               <input
                 value={amount}
                 onChange={(event) => setAmount(event.target.value)}

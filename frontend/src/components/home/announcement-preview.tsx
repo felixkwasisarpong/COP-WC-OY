@@ -18,7 +18,7 @@ export function AnnouncementPreview() {
   return (
     <div className="grid gap-4 md:grid-cols-3">
       {items.map((item: any) => (
-        <div key={item.id} className="rounded-3xl bg-white/90 p-5 shadow-soft-md">
+        <div key={item.id} className="rounded-none bg-white/90 p-5 shadow-soft-md">
           <p className="text-xs uppercase tracking-[0.3em] text-ember">Latest News</p>
           <h3 className="mt-3 font-display text-xl text-ink">{item.title}</h3>
           <p className="mt-2 text-sm text-slate-600">{item.body}</p>

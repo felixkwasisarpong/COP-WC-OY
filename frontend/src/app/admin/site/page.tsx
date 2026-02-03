@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AdminShell } from "@/components/admin-shell";
 import { fetchSiteContent, updateSiteContent } from "@/services/site-content";
-import { fetchMedia } from "@/services/media";
+import { fetchMedia, mediaViewUrl } from "@/services/media";
 import { fetchSermons } from "@/services/sermons";
 import { fetchEvents } from "@/services/events";
 import { useAuth } from "@/hooks/use-auth";
@@ -29,7 +29,11 @@ export default function AdminSiteContentPage() {
     featured_event_id: "",
     about_media_id: "",
     ministries_media_id: "",
-    contact_media_id: ""
+    contact_media_id: "",
+    social_facebook_url: "",
+    social_instagram_url: "",
+    social_youtube_url: "",
+    social_tiktok_url: ""
   });
 
   useEffect(() => {
@@ -40,7 +44,11 @@ export default function AdminSiteContentPage() {
       featured_event_id: siteContent.featured_event_id ? String(siteContent.featured_event_id) : "",
       about_media_id: siteContent.about_media_id ? String(siteContent.about_media_id) : "",
       ministries_media_id: siteContent.ministries_media_id ? String(siteContent.ministries_media_id) : "",
-      contact_media_id: siteContent.contact_media_id ? String(siteContent.contact_media_id) : ""
+      contact_media_id: siteContent.contact_media_id ? String(siteContent.contact_media_id) : "",
+      social_facebook_url: siteContent.social_facebook_url || "",
+      social_instagram_url: siteContent.social_instagram_url || "",
+      social_youtube_url: siteContent.social_youtube_url || "",
+      social_tiktok_url: siteContent.social_tiktok_url || ""
     });
   }, [siteContent]);
 
@@ -53,7 +61,11 @@ export default function AdminSiteContentPage() {
           featured_event_id: form.featured_event_id ? Number(form.featured_event_id) : null,
           about_media_id: form.about_media_id ? Number(form.about_media_id) : null,
           ministries_media_id: form.ministries_media_id ? Number(form.ministries_media_id) : null,
-          contact_media_id: form.contact_media_id ? Number(form.contact_media_id) : null
+          contact_media_id: form.contact_media_id ? Number(form.contact_media_id) : null,
+          social_facebook_url: form.social_facebook_url || null,
+          social_instagram_url: form.social_instagram_url || null,
+          social_youtube_url: form.social_youtube_url || null,
+          social_tiktok_url: form.social_tiktok_url || null
         },
         token || ""
       ),
@@ -63,24 +75,50 @@ export default function AdminSiteContentPage() {
   const mediaOptions = mediaData?.items || [];
   const sermonOptions = sermons?.items || [];
   const eventOptions = events?.items || [];
+  const mediaById = new Map<number, any>(mediaOptions.map((media: any) => [media.id, media]));
+
+  const renderMediaPreview = (mediaId: string) => {
+    const resolvedId = mediaId ? Number(mediaId) : null;
+    const media = resolvedId ? (mediaById.get(resolvedId) as any) : null;
+    if (!media) {
+      return (
+        <div className="h-24 w-full bg-mist flex items-center justify-center text-xs text-slate-500">
+          No image selected
+        </div>
+      );
+    }
+    return (
+      <div className="space-y-2">
+        <img
+          src={mediaViewUrl(media.id)}
+          alt={media.title}
+          className="h-24 w-full object-cover"
+        />
+        <p className="text-xs text-slate-600">{media.title}</p>
+      </div>
+    );
+  };
 
   return (
     <AdminShell title="Site content" subtitle="Control featured content and hero imagery.">
       <div className="rounded-[2rem] bg-white/90 p-6 shadow-soft-md space-y-4">
         <h3 className="font-display text-xl text-ink">Homepage highlights</h3>
         <div className="grid gap-4 md:grid-cols-2">
-          <select
-            className="rounded-2xl border border-wheat px-4 py-3"
-            value={form.hero_media_id}
-            onChange={(event) => setForm({ ...form, hero_media_id: event.target.value })}
-          >
-            <option value="">Hero image (optional)</option>
-            {mediaOptions.map((media: any) => (
-              <option key={media.id} value={media.id}>
-                {media.title}
-              </option>
-            ))}
-          </select>
+          <div className="space-y-3">
+            <select
+              className="rounded-2xl border border-wheat px-4 py-3"
+              value={form.hero_media_id}
+              onChange={(event) => setForm({ ...form, hero_media_id: event.target.value })}
+            >
+              <option value="">Hero image (optional)</option>
+              {mediaOptions.map((media: any) => (
+                <option key={media.id} value={media.id}>
+                  {media.title}
+                </option>
+              ))}
+            </select>
+            {renderMediaPreview(form.hero_media_id)}
+          </div>
           <select
             className="rounded-2xl border border-wheat px-4 py-3"
             value={form.featured_sermon_id}
@@ -111,42 +149,97 @@ export default function AdminSiteContentPage() {
       <div className="rounded-[2rem] bg-white/90 p-6 shadow-soft-md space-y-4">
         <h3 className="font-display text-xl text-ink">Page imagery</h3>
         <div className="grid gap-4 md:grid-cols-2">
-          <select
-            className="rounded-2xl border border-wheat px-4 py-3"
-            value={form.about_media_id}
-            onChange={(event) => setForm({ ...form, about_media_id: event.target.value })}
-          >
-            <option value="">About page image</option>
-            {mediaOptions.map((media: any) => (
-              <option key={media.id} value={media.id}>
-                {media.title}
-              </option>
-            ))}
-          </select>
-          <select
-            className="rounded-2xl border border-wheat px-4 py-3"
-            value={form.ministries_media_id}
-            onChange={(event) => setForm({ ...form, ministries_media_id: event.target.value })}
-          >
-            <option value="">Ministries page image</option>
-            {mediaOptions.map((media: any) => (
-              <option key={media.id} value={media.id}>
-                {media.title}
-              </option>
-            ))}
-          </select>
-          <select
-            className="rounded-2xl border border-wheat px-4 py-3"
-            value={form.contact_media_id}
-            onChange={(event) => setForm({ ...form, contact_media_id: event.target.value })}
-          >
-            <option value="">Contact page image</option>
-            {mediaOptions.map((media: any) => (
-              <option key={media.id} value={media.id}>
-                {media.title}
-              </option>
-            ))}
-          </select>
+          <div className="space-y-3">
+            <select
+              className="rounded-2xl border border-wheat px-4 py-3"
+              value={form.about_media_id}
+              onChange={(event) => setForm({ ...form, about_media_id: event.target.value })}
+            >
+              <option value="">About page image</option>
+              {mediaOptions.map((media: any) => (
+                <option key={media.id} value={media.id}>
+                  {media.title}
+                </option>
+              ))}
+            </select>
+            {renderMediaPreview(form.about_media_id)}
+          </div>
+          <div className="space-y-3">
+            <select
+              className="rounded-2xl border border-wheat px-4 py-3"
+              value={form.ministries_media_id}
+              onChange={(event) => setForm({ ...form, ministries_media_id: event.target.value })}
+            >
+              <option value="">Ministries page image</option>
+              {mediaOptions.map((media: any) => (
+                <option key={media.id} value={media.id}>
+                  {media.title}
+                </option>
+              ))}
+            </select>
+            {renderMediaPreview(form.ministries_media_id)}
+          </div>
+          <div className="space-y-3">
+            <select
+              className="rounded-2xl border border-wheat px-4 py-3"
+              value={form.contact_media_id}
+              onChange={(event) => setForm({ ...form, contact_media_id: event.target.value })}
+            >
+              <option value="">Contact page image</option>
+              {mediaOptions.map((media: any) => (
+                <option key={media.id} value={media.id}>
+                  {media.title}
+                </option>
+              ))}
+            </select>
+            {renderMediaPreview(form.contact_media_id)}
+          </div>
+        </div>
+      </div>
+
+      <div className="rounded-[2rem] bg-white/90 p-6 shadow-soft-md space-y-4">
+        <h3 className="font-display text-xl text-ink">Social links</h3>
+        <div className="grid gap-4 md:grid-cols-2">
+          <label className="text-xs uppercase tracking-[0.3em] text-slate-500">
+            Facebook URL
+            <input
+              className="mt-2 w-full rounded-2xl border border-wheat px-4 py-3 text-sm"
+              value={form.social_facebook_url}
+              onChange={(event) => setForm({ ...form, social_facebook_url: event.target.value })}
+              placeholder="https://facebook.com/..."
+              type="url"
+            />
+          </label>
+          <label className="text-xs uppercase tracking-[0.3em] text-slate-500">
+            Instagram URL
+            <input
+              className="mt-2 w-full rounded-2xl border border-wheat px-4 py-3 text-sm"
+              value={form.social_instagram_url}
+              onChange={(event) => setForm({ ...form, social_instagram_url: event.target.value })}
+              placeholder="https://instagram.com/..."
+              type="url"
+            />
+          </label>
+          <label className="text-xs uppercase tracking-[0.3em] text-slate-500">
+            YouTube URL
+            <input
+              className="mt-2 w-full rounded-2xl border border-wheat px-4 py-3 text-sm"
+              value={form.social_youtube_url}
+              onChange={(event) => setForm({ ...form, social_youtube_url: event.target.value })}
+              placeholder="https://youtube.com/..."
+              type="url"
+            />
+          </label>
+          <label className="text-xs uppercase tracking-[0.3em] text-slate-500">
+            TikTok URL
+            <input
+              className="mt-2 w-full rounded-2xl border border-wheat px-4 py-3 text-sm"
+              value={form.social_tiktok_url}
+              onChange={(event) => setForm({ ...form, social_tiktok_url: event.target.value })}
+              placeholder="https://tiktok.com/@..."
+              type="url"
+            />
+          </label>
         </div>
       </div>
 
