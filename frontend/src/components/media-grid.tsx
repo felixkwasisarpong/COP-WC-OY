@@ -8,11 +8,11 @@ export function MediaGrid({ items, rounded = true }: { items: any[]; rounded?: b
   const { token } = useAuth();
   const cardRadius = rounded ? "rounded-3xl" : "rounded-none";
   const imageRadius = rounded ? "rounded-2xl" : "rounded-none";
-  const buttonRadius = rounded ? "rounded-full" : "rounded-none";
   const cardBase = rounded ? "bg-white/90 p-4 shadow-soft-md" : "bg-transparent p-0";
-  const overlayClass = rounded ? "bg-gradient-to-t from-ink/40 to-transparent" : "bg-transparent";
-  const iconButton =
-    "inline-flex h-10 w-10 items-center justify-center border border-white/70 bg-slate-900/60 text-white transition hover:bg-ember hover:border-ember";
+  const overlayClass = rounded
+    ? "bg-gradient-to-t from-ink/40 to-transparent group-hover:from-ink/70"
+    : "bg-transparent group-hover:bg-slate-950/35";
+  const iconButton = "text-white transition hover:text-wheat";
 
   const handleDownload = async (id: number, filename: string) => {
     if (!token) return;
@@ -29,31 +29,31 @@ export function MediaGrid({ items, rounded = true }: { items: any[]; rounded?: b
     <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
       {items.map((media) => (
         <div key={media.id} className={`${cardRadius} ${cardBase}`}>
-          <div className={`relative h-44 ${imageRadius} overflow-hidden bg-mist`}>
+          <div className={`group relative h-44 ${imageRadius} overflow-hidden bg-mist`}>
             <img
               src={mediaViewUrl(media.id)}
               alt={media.title}
               className="h-full w-full object-cover"
               loading="lazy"
             />
-            <div className={`absolute inset-0 ${overlayClass}`} />
-            <div className="absolute right-3 top-3 flex items-center gap-2">
+            <div className={`absolute inset-0 transition ${overlayClass}`} />
+            <div className="absolute inset-x-3 bottom-3 flex items-center justify-between">
               <a
                 href={mediaViewUrl(media.id)}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Preview image"
-                className={`${iconButton} ${buttonRadius}`}
+                className={iconButton}
               >
-                <Eye className="h-4 w-4" />
+                <Eye className="h-5 w-5" />
               </a>
               {token && media.downloads_enabled && (
                 <button
                   onClick={() => handleDownload(media.id, media.filename)}
                   aria-label="Download image"
-                  className={`${iconButton} ${buttonRadius}`}
+                  className={iconButton}
                 >
-                  <Download className="h-4 w-4" />
+                  <Download className="h-5 w-5" />
                 </button>
               )}
             </div>
