@@ -31,7 +31,7 @@ export default function SermonDetailPage({ params }: { params: { id: string } })
 
       <div className="space-y-6">
         {data.video_url ? (
-          <div className="aspect-video rounded-3xl overflow-hidden shadow-soft-xl">
+          <div className="aspect-video rounded-none overflow-hidden shadow-soft-xl">
             <iframe
               title={data.title}
               src={data.video_url}
@@ -41,7 +41,7 @@ export default function SermonDetailPage({ params }: { params: { id: string } })
             />
           </div>
         ) : (
-          <div className="rounded-3xl bg-white/80 p-10 text-center shadow-soft-md">
+          <div className="rounded-none bg-white/80 p-10 text-center shadow-soft-md">
             <p className="text-sm text-slate-600">Video coming soon.</p>
           </div>
         )}
@@ -54,10 +54,12 @@ export default function SermonDetailPage({ params }: { params: { id: string } })
       </div>
 
       <div className="flex flex-wrap gap-4">
-        <Button href="/sermons" variant="outline">
+        <Button href="/sermons" variant="outline" className="rounded-none">
           Back to Sermons
         </Button>
-        <Button href="/give">Support Ministry</Button>
+        <Button href="/give" className="rounded-none">
+          Support Ministry
+        </Button>
       </div>
     </div>
   );

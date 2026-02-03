@@ -14,14 +14,14 @@ export default function ContactPage() {
           <p>123 Grace Avenue, City, State 00000</p>
           <p>(555) 555-1234</p>
           <p>info@thechurchofpentecost.org</p>
-          <div className="rounded-3xl bg-white/80 p-6 shadow-soft-md">
+          <div className="rounded-none bg-white/80 p-6 shadow-soft-md">
             <p className="text-xs uppercase tracking-[0.3em] text-ember">Office Hours</p>
             <p className="mt-2 text-sm">Mon - Thu: 9:00 AM - 4:00 PM</p>
             <p className="text-sm">Friday: 9:00 AM - 1:00 PM</p>
           </div>
-          <PageImage kind="contact" fallback="Visit us" />
+          <PageImage kind="contact" fallback="Visit us" rounded={false} />
         </div>
-        <div className="rounded-3xl overflow-hidden shadow-soft-xl">
+        <div className="rounded-none overflow-hidden shadow-soft-xl">
           <iframe
             title="Church location map"
             src="https://maps.google.com/maps?q=church&t=&z=13&ie=UTF8&iwloc=&output=embed"

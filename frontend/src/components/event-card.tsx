@@ -5,20 +5,27 @@ export function EventCard({
   title,
   date,
   location,
-  imageUrl
+  imageUrl,
+  rounded = true
 }: {
   id: number;
   title: string;
   date: string;
   location: string;
   imageUrl?: string;
+  rounded?: boolean;
 }) {
+  const cardRadius = rounded ? "rounded-3xl" : "rounded-none";
+  const imageRadius = rounded ? "rounded-2xl" : "rounded-none";
+
   return (
     <Link
       href={`/events/${id}`}
-      className="rounded-3xl border border-wheat bg-white/80 p-6 shadow-soft-md transition hover:-translate-y-1 hover:shadow-soft-xl"
+      className={`${cardRadius} border border-wheat bg-white/80 p-6 shadow-soft-md transition hover:-translate-y-1 hover:shadow-soft-xl`}
     >
-      <div className="h-32 rounded-2xl bg-gradient-to-br from-wheat via-white to-mist overflow-hidden flex items-center justify-center text-ember font-display text-xl">
+      <div
+        className={`h-32 ${imageRadius} bg-gradient-to-br from-wheat via-white to-mist overflow-hidden flex items-center justify-center text-ember font-display text-xl`}
+      >
         {imageUrl ? (
           <img src={imageUrl} alt={title} className="h-full w-full object-cover" loading="lazy" />
         ) : (

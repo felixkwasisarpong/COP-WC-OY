@@ -18,18 +18,23 @@ export default function AdminMediaPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isPublic, setIsPublic] = useState(true);
-  const [downloadsEnabled, setDownloadsEnabled] = useState(false);
+  const [downloadsEnabled, setDownloadsEnabled] = useState(true);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [bulkLoading, setBulkLoading] = useState(false);
+  const [bulkError, setBulkError] = useState<string | null>(null);
 
   const uploadMutation = useMutation({
     mutationFn: async () => {
       if (files.length === 0) {
         throw new Error("No file selected");
       }
+      if (!title) {
+        throw new Error("Title is required");
+      }
       for (const file of files) {
         const form = new FormData();
         form.append("file", file);
-        const resolvedTitle = files.length > 1 ? file.name : title || file.name;
+        const resolvedTitle = files.length > 1 ? `${title} ${files.indexOf(file) + 1}` : title;
         form.append("title", resolvedTitle);
         form.append("description", description);
         form.append("is_public", String(isPublic));
@@ -47,13 +52,29 @@ export default function AdminMediaPage() {
       setUploadError(null);
       queryClient.invalidateQueries({ queryKey: ["admin-media"] });
     },
-    onError: () => setUploadError("Upload failed. Please try again.")
+    onError: (error) => setUploadError(error instanceof Error ? error.message : "Upload failed. Please try again.")
   });
 
   const updateMutation = useMutation({
     mutationFn: ({ id, payload }: { id: number; payload: any }) => updateMedia(id, payload, token || ""),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin-media"] })
   });
+
+  const applyBulkUpdate = async (payload: Record<string, any>) => {
+    if (!data?.items?.length || !token) return;
+    setBulkLoading(true);
+    setBulkError(null);
+    try {
+      for (const item of data.items) {
+        await updateMedia(item.id, payload, token);
+      }
+      queryClient.invalidateQueries({ queryKey: ["admin-media"] });
+    } catch (error) {
+      setBulkError("Bulk update failed. Please try again.");
+    } finally {
+      setBulkLoading(false);
+    }
+  };
 
   const handleDownload = async (id: number, filename: string) => {
     if (!token) return;
@@ -79,13 +100,13 @@ export default function AdminMediaPage() {
           />
           <input
             className="rounded-2xl border border-wheat px-4 py-3"
-            placeholder="Title (optional for single upload)"
+            placeholder="Title (required)"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
           />
           <input
             className="rounded-2xl border border-wheat px-4 py-3"
-            placeholder="Description"
+            placeholder="Description (optional)"
             value={description}
             onChange={(event) => setDescription(event.target.value)}
           />
@@ -116,10 +137,26 @@ export default function AdminMediaPage() {
 
       <div className="space-y-4">
         <h3 className="font-display text-xl text-ink">Library</h3>
+        <div className="flex flex-wrap gap-3">
+          <button
+            onClick={() => applyBulkUpdate({ is_public: true })}
+            className="rounded-full border border-ember px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember"
+          >
+            Make all public
+          </button>
+          <button
+            onClick={() => applyBulkUpdate({ downloads_enabled: true })}
+            className="rounded-full border border-ember px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember"
+          >
+            Enable all downloads
+          </button>
+          {bulkLoading && <span className="text-xs text-slate-500">Updating...</span>}
+          {bulkError && <span className="text-xs text-ember">{bulkError}</span>}
+        </div>
         {isLoading ? (
           <p className="text-sm text-slate-600">Loading media...</p>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {(data?.items || []).map((media: any) => (
               <div key={media.id} className="rounded-[2rem] bg-white/90 p-5 shadow-soft-md space-y-3">
                 {media.content_type?.startsWith("image/") ? (
@@ -135,7 +172,6 @@ export default function AdminMediaPage() {
                 )}
                 <div>
                   <h4 className="font-display text-xl text-ink">{media.title}</h4>
-                  <p className="text-xs text-slate-500">{media.filename}</p>
                 </div>
                 <div className="flex flex-wrap gap-4 text-sm text-slate-600">
                   <label className="flex items-center gap-2">
@@ -163,9 +199,22 @@ export default function AdminMediaPage() {
                   </label>
                 </div>
                 <div className="flex flex-wrap gap-3">
+                  <a
+                    href={mediaViewUrl(media.id)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-full border border-ember px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember"
+                  >
+                    Preview
+                  </a>
                   <button
                     onClick={() => handleDownload(media.id, media.filename)}
-                    className="rounded-full border border-ember px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember"
+                    disabled={!media.downloads_enabled}
+                    className={`rounded-full border px-4 py-2 text-xs uppercase tracking-[0.3em] ${
+                      media.downloads_enabled
+                        ? "border-ember text-ember"
+                        : "border-slate-200 text-slate-400 cursor-not-allowed"
+                    }`}
                   >
                     Download
                   </button>

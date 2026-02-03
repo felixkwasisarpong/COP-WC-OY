@@ -27,17 +27,19 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
         <p className="text-sm text-slate-600">{data.location}</p>
       </div>
 
-      <div className="rounded-3xl bg-white/80 p-8 shadow-soft-md">
+      <div className="rounded-none bg-white/80 p-8 shadow-soft-md">
         <p className="text-sm text-slate-600">
           {data.description || "Details for this event will be shared soon."}
         </p>
       </div>
 
       <div className="flex flex-wrap gap-4">
-        <Button href="/events" variant="outline">
+        <Button href="/events" variant="outline" className="rounded-none">
           Back to Events
         </Button>
-        <Button href="/contact">Questions?</Button>
+        <Button href="/contact" className="rounded-none">
+          Questions?
+        </Button>
       </div>
     </div>
   );

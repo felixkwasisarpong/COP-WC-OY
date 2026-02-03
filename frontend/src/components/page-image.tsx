@@ -10,17 +10,27 @@ const keyMap = {
   contact: "contact_media_id"
 } as const;
 
-export function PageImage({ kind, fallback }: { kind: keyof typeof keyMap; fallback: string }) {
+export function PageImage({
+  kind,
+  fallback,
+  rounded = true
+}: {
+  kind: keyof typeof keyMap;
+  fallback: string;
+  rounded?: boolean;
+}) {
   const { data } = useQuery({
     queryKey: ["site-content"],
     queryFn: fetchSiteContent
   });
 
   const mediaId = data?.[keyMap[kind]] as number | undefined | null;
+  const containerRadius = rounded ? "rounded-[2.5rem]" : "rounded-none";
+  const imageRadius = rounded ? "rounded-[2rem]" : "rounded-none";
 
   return (
-    <div className="rounded-[2.5rem] bg-white/80 p-4 shadow-soft-xl">
-      <div className="rounded-[2rem] overflow-hidden bg-gradient-to-br from-wheat via-white to-mist">
+    <div className={`${containerRadius} bg-white/80 p-4 shadow-soft-xl`}>
+      <div className={`${imageRadius} overflow-hidden bg-gradient-to-br from-wheat via-white to-mist`}>
         {mediaId ? (
           <img
             src={mediaViewUrl(mediaId)}

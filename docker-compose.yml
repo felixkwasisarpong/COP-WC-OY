@@ -35,6 +35,7 @@ services:
       dockerfile: Dockerfile
       args:
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+        NEXT_PUBLIC_HOME_VIDEO_URL: ${NEXT_PUBLIC_HOME_VIDEO_URL}
     restart: unless-stopped
     env_file: ./.env
     environment:

@@ -2,62 +2,120 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin, Menu, Phone, Search, X, Youtube } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/sermons", label: "Sermons" },
-  { href: "/live", label: "Live" },
-  { href: "/events", label: "Events" },
   { href: "/ministries", label: "Ministries" },
-  { href: "/give", label: "Give" },
+  { href: "/leadership", label: "Leadership" },
+  { href: "/gallery", label: "Media" },
   { href: "/contact", label: "Contact" }
 ];
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuth();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const headerStyles = isHome
+    ? "bg-slate-950/95 border-b border-slate-800"
+    : "bg-white border-b border-slate-200";
+  const navText = isHome ? "text-white" : "text-ink";
+  const navActive = isHome ? "text-wheat border-wheat" : "text-wheat border-wheat";
+  const navInactive = isHome ? "border-transparent hover:text-wheat" : "border-transparent hover:text-ember";
+  const authButton = isHome
+    ? "rounded-full border border-wheat px-5 py-2 text-xs uppercase tracking-[0.3em] text-wheat hover:bg-wheat hover:text-slate-950"
+    : "rounded-none border border-slate-200 px-4 py-2 text-xs uppercase tracking-[0.3em] text-ink hover:bg-ink hover:text-white";
 
   return (
-    <header className="sticky top-0 z-50 bg-mist/90 backdrop-blur border-b border-wheat">
+    <header className={`sticky top-0 z-50 backdrop-blur ${headerStyles}`}>
+      {!isHome && (
+        <div className="bg-ink text-white">
+          <div className="mx-auto max-w-6xl px-4 py-2 flex flex-wrap items-center justify-between gap-4 text-[0.65rem] uppercase tracking-[0.3em]">
+            <div className="flex flex-wrap items-center gap-4">
+              <span className="flex items-center gap-2">
+                <Phone className="h-3 w-3" />
+                (555) 555-1234
+              </span>
+              <span className="flex items-center gap-2">
+                <Mail className="h-3 w-3" />
+                info@thechurchofpentecost.org
+              </span>
+              <span className="flex items-center gap-2">
+                <MapPin className="h-3 w-3" />
+                Oyarifa Worship Center
+              </span>
+            </div>
+            <div className="flex items-center gap-3">
+              <button type="button" aria-label="Search" className="hover:text-wheat">
+                <Search className="h-4 w-4" />
+              </button>
+              <a href="#" aria-label="Facebook" className="hover:text-wheat">
+                <Facebook className="h-4 w-4" />
+              </a>
+              <a href="#" aria-label="Instagram" className="hover:text-wheat">
+                <Instagram className="h-4 w-4" />
+              </a>
+              <a href="#" aria-label="YouTube" className="hover:text-wheat">
+                <Youtube className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
           <img src="/logo.svg" alt="The Church of Pentecost logo" className="h-10 w-10" />
           <span className="font-display text-lg leading-tight">
-            <span className="block">The Church of Pentecost</span>
-            <span className="block text-xs uppercase tracking-[0.3em] text-slate-500">
+            <span className={`block ${isHome ? "text-white" : "text-ink"}`}>The Church of Pentecost</span>
+            <span
+              className={`block text-xs uppercase tracking-[0.3em] ${
+                isHome ? "text-slate-400" : "text-slate-500"
+              }`}
+            >
               Oyarifa Worship Center
             </span>
           </span>
         </Link>
-        <nav className="hidden md:flex items-center gap-6 text-sm uppercase tracking-[0.2em]">
-          {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className="hover:text-ember transition">
-              {item.label}
-            </Link>
-          ))}
+        <nav className={`hidden md:flex items-center gap-6 text-xs uppercase tracking-[0.3em] ${navText}`}>
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`transition border-b-2 ${isActive ? navActive : navInactive}`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
           {user?.role === "admin" && (
-            <Link href="/admin" className="text-sm uppercase tracking-[0.2em] text-ember">
+            <Link href="/admin" className={`text-xs uppercase tracking-[0.3em] ${isHome ? "text-wheat" : "text-ember"}`}>
               Admin
             </Link>
           )}
           {user ? (
             <button
               onClick={logout}
-              className="gradient-border relative px-5 py-2 rounded-full text-sm"
+              className={authButton}
             >
               Sign out
             </button>
           ) : (
-            <Link href="/login" className="gradient-border relative px-5 py-2 rounded-full text-sm">
+            <Link
+              href="/login"
+              className={authButton}
+            >
               Login
             </Link>
           )}
         </nav>
         <button
-          className="md:hidden p-2"
+          className={`md:hidden p-2 ${isHome ? "text-white" : "text-ink"}`}
           onClick={() => setOpen((prev) => !prev)}
           aria-label="Toggle menu"
         >
@@ -65,7 +123,11 @@ export function SiteHeader() {
         </button>
       </div>
       {open && (
-        <div className="md:hidden border-t border-wheat bg-mist px-4 py-4 space-y-3">
+        <div
+          className={`md:hidden border-t px-4 py-4 space-y-3 ${
+            isHome ? "border-slate-800 bg-slate-950 text-white" : "border-slate-200 bg-white text-ink"
+          }`}
+        >
           {navItems.map((item) => (
             <Link key={item.href} href={item.href} className="block text-sm uppercase tracking-[0.2em]">
               {item.label}
@@ -77,14 +139,14 @@ export function SiteHeader() {
             </Link>
           )}
           {user ? (
-            <button
-              onClick={logout}
-              className="w-full px-5 py-2 rounded-full border border-ember text-ember"
-            >
+            <button onClick={logout} className={`w-full px-5 py-2 ${isHome ? "rounded-full border border-wheat text-wheat" : "rounded-none border border-slate-200"}`}>
               Sign out
             </button>
           ) : (
-            <Link href="/login" className="block w-full px-5 py-2 rounded-full border border-ember text-ember">
+            <Link
+              href="/login"
+              className={`block w-full px-5 py-2 ${isHome ? "rounded-full border border-wheat text-wheat" : "rounded-none border border-slate-200"}`}
+            >
               Login
             </Link>
           )}
