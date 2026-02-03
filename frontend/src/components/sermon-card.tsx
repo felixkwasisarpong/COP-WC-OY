@@ -6,7 +6,8 @@ export function SermonCard({
   speaker,
   date,
   scripture,
-  imageUrl
+  imageUrl,
+  rounded = true
 }: {
   id: number;
   title: string;
@@ -14,13 +15,19 @@ export function SermonCard({
   date: string;
   scripture: string;
   imageUrl?: string;
+  rounded?: boolean;
 }) {
+  const cardRadius = rounded ? "rounded-3xl" : "rounded-none";
+  const imageRadius = rounded ? "rounded-2xl" : "rounded-none";
+
   return (
     <Link
       href={`/sermons/${id}`}
-      className="group rounded-3xl bg-white/80 p-6 shadow-soft-md transition hover:-translate-y-1 hover:shadow-soft-xl"
+      className={`group ${cardRadius} bg-white/80 p-6 shadow-soft-md transition hover:-translate-y-1 hover:shadow-soft-xl`}
     >
-      <div className="h-40 rounded-2xl bg-hero-glow overflow-hidden flex items-center justify-center text-ember font-display text-xl">
+      <div
+        className={`h-40 ${imageRadius} bg-hero-glow overflow-hidden flex items-center justify-center text-ember font-display text-xl`}
+      >
         {imageUrl ? (
           <img src={imageUrl} alt={title} className="h-full w-full object-cover" loading="lazy" />
         ) : (

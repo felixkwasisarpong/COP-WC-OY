@@ -38,6 +38,7 @@ export default function HomePage() {
                 title="Welcome video"
                 src={videoSrc}
                 className="h-full w-full"
+                allow="autoplay; encrypted-media; picture-in-picture"
                 allowFullScreen
                 loading="lazy"
               />
@@ -125,7 +126,7 @@ export default function HomePage() {
               action: "Discover"
             }
           ].map((card) => (
-            <div key={card.title} className="rounded-3xl bg-white/90 p-6 shadow-soft-md space-y-3">
+            <div key={card.title} className="rounded-none bg-white/90 p-6 shadow-soft-md space-y-3">
               <p className="text-xs uppercase tracking-[0.3em] text-ember">{card.title}</p>
               <p className="text-sm text-slate-600">{card.body}</p>
               <Button href="/about" variant="outline">
@@ -158,7 +159,7 @@ export default function HomePage() {
             { title: "Get Resources", body: "Watch sermons and access teaching materials.", href: "/sermons" },
             { title: "Know Our Leaders", body: "Meet the pastors and ministry leaders.", href: "/leadership" }
           ].map((card) => (
-            <div key={card.title} className="rounded-3xl bg-white/90 p-6 shadow-soft-md">
+            <div key={card.title} className="rounded-none bg-white/90 p-6 shadow-soft-md">
               <p className="text-xs uppercase tracking-[0.3em] text-ember">{card.title}</p>
               <p className="mt-3 text-sm text-slate-600">{card.body}</p>
               <Button href={card.href} variant="outline" className="mt-4">
@@ -223,7 +224,7 @@ export default function HomePage() {
             { title: "Prayer Request", body: "Submit a prayer request for our team." },
             { title: "Missions & Urban Outreach", body: "Serving communities with the gospel." }
           ].map((card) => (
-            <div key={card.title} className="rounded-3xl bg-white/90 p-5 shadow-soft-md">
+            <div key={card.title} className="rounded-none bg-white/90 p-5 shadow-soft-md">
               <p className="text-xs uppercase tracking-[0.3em] text-ember">{card.title}</p>
               <p className="mt-3 text-sm text-slate-600">{card.body}</p>
             </div>

@@ -17,7 +17,7 @@ export default function LeadershipPage() {
       />
       <div className="grid gap-6 md:grid-cols-2">
         {leaders.map((leader) => (
-          <div key={leader.name} className="rounded-3xl bg-white/80 p-6 shadow-soft-md">
+          <div key={leader.name} className="rounded-none bg-white/80 p-6 shadow-soft-md">
             <div className="h-16 w-16 rounded-full bg-hero-glow flex items-center justify-center text-ember font-display text-xl">
               {leader.name.charAt(0)}
             </div>

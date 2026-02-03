@@ -18,10 +18,10 @@ export default function MinistriesPage() {
         title="Where every generation belongs"
         description="Find a ministry that helps you grow, serve, and connect in community."
       />
-      <PageImage kind="ministries" fallback="Ministry moments" />
+      <PageImage kind="ministries" fallback="Ministry moments" rounded={false} />
       <div className="grid gap-6 md:grid-cols-2">
         {ministries.map((ministry) => (
-          <div key={ministry.name} className="rounded-3xl border border-wheat bg-white/80 p-6 shadow-soft-md">
+          <div key={ministry.name} className="rounded-none border border-wheat bg-white/80 p-6 shadow-soft-md">
             <h3 className="font-display text-2xl">{ministry.name}</h3>
             <p className="mt-3 text-sm text-slate-600">{ministry.description}</p>
           </div>

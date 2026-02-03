@@ -29,7 +29,7 @@ export default function LivePage() {
             <span className="text-xs uppercase tracking-[0.3em] text-slate-500">{data.schedule_text || "Sundays 9:00 AM & 11:00 AM"}</span>
           </div>
           {data.embed_url ? (
-            <div className="aspect-video rounded-3xl overflow-hidden shadow-soft-xl">
+            <div className="aspect-video rounded-none overflow-hidden shadow-soft-xl">
               <iframe
                 title="Live stream"
                 src={data.embed_url}
@@ -39,12 +39,12 @@ export default function LivePage() {
               />
             </div>
           ) : (
-            <div className="rounded-3xl bg-white/80 p-12 text-center shadow-soft-md space-y-4">
+            <div className="rounded-none bg-white/80 p-12 text-center shadow-soft-md space-y-4">
               {data.cover_image_id && (
                 <img
                   src={mediaViewUrl(data.cover_image_id)}
                   alt="Livestream cover"
-                  className="w-full h-64 object-cover rounded-2xl"
+                  className="w-full h-64 object-cover rounded-none"
                   loading="lazy"
                 />
               )}
@@ -56,7 +56,7 @@ export default function LivePage() {
         <p className="text-center text-sm text-slate-500">Livestream info not available.</p>
       )}
 
-      <div className="rounded-3xl bg-white/80 p-8 shadow-soft-md">
+      <div className="rounded-none bg-white/80 p-8 shadow-soft-md">
         <h3 className="font-display text-2xl">Upcoming service times</h3>
         <ul className="mt-4 space-y-2 text-sm text-slate-600">
           <li>Sunday Morning Worship — 9:00 AM</li>

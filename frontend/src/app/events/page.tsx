@@ -31,6 +31,7 @@ export default function EventsPage() {
               date={new Date(event.start_time).toLocaleString()}
               location={event.location}
               imageUrl={event.cover_image_id ? mediaViewUrl(event.cover_image_id) : undefined}
+              rounded={false}
             />
           ))}
         </div>

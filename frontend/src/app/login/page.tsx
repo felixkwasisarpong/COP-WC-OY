@@ -35,13 +35,13 @@ export default function MemberLoginPage() {
         title="Member login"
         description="Sign in to access member-only resources and downloads."
       />
-      <form onSubmit={handleSubmit} className="rounded-[2.5rem] bg-white/80 p-8 shadow-soft-xl space-y-4">
+      <form onSubmit={handleSubmit} className="rounded-none bg-white/80 p-8 shadow-soft-xl space-y-4">
         <label className="text-sm text-slate-600">
           Email
           <input
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-wheat bg-white/70 px-4 py-3"
+            className="mt-2 w-full rounded-none border border-wheat bg-white/70 px-4 py-3"
             type="email"
             required
           />
@@ -51,12 +51,12 @@ export default function MemberLoginPage() {
           <input
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-wheat bg-white/70 px-4 py-3"
+            className="mt-2 w-full rounded-none border border-wheat bg-white/70 px-4 py-3"
             type="password"
             required
           />
         </label>
-        <Button>{loading ? "Signing in..." : "Sign in"}</Button>
+        <Button className="rounded-none">{loading ? "Signing in..." : "Sign in"}</Button>
         {error && <p className="text-sm text-ember">{error}</p>}
       </form>
     </div>

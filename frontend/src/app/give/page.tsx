@@ -42,7 +42,7 @@ export default function GivePage() {
       />
 
       <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr]">
-        <form onSubmit={handleSubmit} className="rounded-[2.5rem] bg-white/80 p-8 shadow-soft-xl space-y-6">
+        <form onSubmit={handleSubmit} className="rounded-none bg-white/80 p-8 shadow-soft-xl space-y-6">
           <div>
             <label className="text-xs uppercase tracking-[0.3em] text-ember">Amount</label>
             <div className="mt-3 flex items-center gap-3">
@@ -50,7 +50,7 @@ export default function GivePage() {
               <input
                 value={amount}
                 onChange={(event) => setAmount(event.target.value)}
-                className="w-full rounded-2xl border border-wheat bg-white/70 px-4 py-3 text-lg"
+                className="w-full rounded-none border border-wheat bg-white/70 px-4 py-3 text-lg"
                 type="number"
                 min="1"
               />
@@ -65,7 +65,7 @@ export default function GivePage() {
                   type="button"
                   key={option}
                   onClick={() => setFrequency(option)}
-                  className={`rounded-2xl border px-4 py-3 text-sm uppercase tracking-[0.2em] transition ${
+                  className={`rounded-none border px-4 py-3 text-sm uppercase tracking-[0.2em] transition ${
                     frequency === option
                       ? "border-ember bg-ember text-white"
                       : "border-wheat text-slate-600 hover:border-ember"
@@ -85,7 +85,7 @@ export default function GivePage() {
                   type="button"
                   key={option}
                   onClick={() => setCategory(option)}
-                  className={`rounded-2xl border px-4 py-3 text-sm transition ${
+                  className={`rounded-none border px-4 py-3 text-sm transition ${
                     category === option
                       ? "border-ember bg-ember text-white"
                       : "border-wheat text-slate-600 hover:border-ember"
@@ -97,18 +97,18 @@ export default function GivePage() {
             </div>
           </div>
 
-          <Button>{loading ? "Preparing..." : "Continue"}</Button>
+          <Button className="rounded-none">{loading ? "Preparing..." : "Continue"}</Button>
           {message && <p className="text-sm text-slate-600">{message}</p>}
         </form>
 
         <div className="space-y-6">
-          <div className="rounded-3xl bg-ember text-white p-8 shadow-soft-xl">
+          <div className="rounded-none bg-ember text-white p-8 shadow-soft-xl">
             <h3 className="font-display text-2xl">Safe and secure</h3>
             <p className="mt-3 text-sm text-white/80">
               We partner with trusted payment providers. No payment data is stored on our servers.
             </p>
           </div>
-          <div className="rounded-3xl bg-white/80 p-8 shadow-soft-md text-sm text-slate-600 space-y-2">
+          <div className="rounded-none bg-white/80 p-8 shadow-soft-md text-sm text-slate-600 space-y-2">
             <p>Need help with giving? Email finance@thechurchofpentecost.org.</p>
             <p>Looking for year-end statements? Log in to your member portal (coming soon).</p>
           </div>

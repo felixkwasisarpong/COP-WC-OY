@@ -8,7 +8,7 @@ export default function AreasPage() {
         title="Our mission footprint"
         description="Explore the areas and districts served by The Church of Pentecost."
       />
-      <div className="rounded-3xl bg-white/90 p-6 shadow-soft-md text-sm text-slate-600">
+      <div className="rounded-none bg-white/90 p-6 shadow-soft-md text-sm text-slate-600">
         Content for areas and districts will be added here.
       </div>
     </div>

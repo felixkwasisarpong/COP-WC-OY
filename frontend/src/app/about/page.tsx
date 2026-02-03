@@ -38,19 +38,19 @@ export default function AboutPage() {
           </div>
         </div>
         <div className="space-y-6">
-          <PageImage kind="about" fallback="Our community" />
-          <div className="rounded-[2.5rem] bg-white/90 p-8 shadow-soft-xl">
-            <div className="rounded-[2rem] bg-mist p-8 space-y-4">
+          <PageImage kind="about" fallback="Our community" rounded={false} />
+          <div className="rounded-none bg-white/90 p-8 shadow-soft-xl">
+            <div className="rounded-none bg-mist p-8 space-y-4">
               <h3 className="font-display text-2xl">Our Tenets & Core Beliefs</h3>
               <p className="text-sm text-slate-600">
                 Our tenets form the foundation of our doctrine, while our core beliefs shape how we
                 live, serve, and worship.
               </p>
               <div className="flex flex-wrap gap-3">
-                <Button href="/about" variant="outline">
+                <Button href="/about" variant="outline" className="rounded-none">
                   Go to Tenets
                 </Button>
-                <Button href="/about" variant="outline">
+                <Button href="/about" variant="outline" className="rounded-none">
                   Go to Core Beliefs
                 </Button>
               </div>
