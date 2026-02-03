@@ -14,7 +14,7 @@ export default function GalleryPage() {
     queryFn: () => fetchMedia()
   });
 
-  const items = data?.items || [];
+  const items = (data?.items || []) as any[];
   const heroItems = items.slice(0, 3);
 
   return (
@@ -22,7 +22,7 @@ export default function GalleryPage() {
       <div className="w-full">
         <div className="grid md:grid-cols-3">
           {heroItems.length ? (
-            heroItems.map((media, index) => (
+            heroItems.map((media: any, index: number) => (
               <div key={media.id} className="relative h-64 md:h-[420px] overflow-hidden bg-slate-900">
                 <img
                   src={mediaViewUrl(media.id)}
