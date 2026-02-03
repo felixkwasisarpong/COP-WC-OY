@@ -28,6 +28,7 @@ export function SermonPreview() {
           date={new Date(sermon.sermon_date).toLocaleDateString()}
           scripture={sermon.scripture}
           imageUrl={sermon.thumbnail_media_id ? mediaViewUrl(sermon.thumbnail_media_id) : undefined}
+          rounded={false}
         />
       ))}
     </div>

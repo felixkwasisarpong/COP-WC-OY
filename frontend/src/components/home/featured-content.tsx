@@ -63,6 +63,7 @@ export function FeaturedContent() {
           imageUrl={
             selectedSermon.thumbnail_media_id ? mediaViewUrl(selectedSermon.thumbnail_media_id) : undefined
           }
+          rounded={false}
         />
       )}
       {selectedEvent && (
@@ -72,6 +73,7 @@ export function FeaturedContent() {
           date={new Date(selectedEvent.start_time).toLocaleString()}
           location={selectedEvent.location}
           imageUrl={selectedEvent.cover_image_id ? mediaViewUrl(selectedEvent.cover_image_id) : undefined}
+          rounded={false}
         />
       )}
     </div>

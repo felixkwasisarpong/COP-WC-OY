@@ -62,17 +62,17 @@ export default function HomePage() {
         </div>
         <div className="relative mx-auto max-w-6xl px-4 py-10 md:py-12">
           <div className="grid gap-6 md:grid-cols-3 text-white">
-            <div className="rounded-3xl bg-white/5 p-5">
+            <div className="rounded-none bg-white/5 p-5">
               <p className="text-xs uppercase tracking-[0.3em] text-wheat">Service Times</p>
               <p className="mt-2 text-sm text-slate-200">Sundays • 9:00 AM & 11:00 AM</p>
               <p className="text-sm text-slate-300">Wednesdays • 7:00 PM</p>
             </div>
-            <div className="rounded-3xl bg-white/5 p-5">
+            <div className="rounded-none bg-white/5 p-5">
               <p className="text-xs uppercase tracking-[0.3em] text-wheat">Location</p>
               <p className="mt-2 text-sm text-slate-200">Oyarifa Worship Center</p>
               <p className="text-sm text-slate-300">Accra, Ghana</p>
             </div>
-            <div className="rounded-3xl bg-white/5 p-5">
+            <div className="rounded-none bg-white/5 p-5">
               <p className="text-xs uppercase tracking-[0.3em] text-wheat">Get Connected</p>
               <p className="mt-2 text-sm text-slate-200">Join a ministry or small group.</p>
               <div className="mt-3 flex flex-wrap gap-2">
@@ -95,7 +95,7 @@ export default function HomePage() {
           description="The foundations that shape our worship, community, and mission."
         />
         <div className="grid gap-8 md:grid-cols-[1fr_1.2fr] items-start">
-          <div className="rounded-3xl bg-white/90 p-6 shadow-soft-md space-y-4">
+          <div className="rounded-none bg-white/90 p-6 shadow-soft-md space-y-4">
             <p className="text-xs uppercase tracking-[0.3em] text-ember">Our Tenets</p>
             <p className="text-sm text-slate-600">
               Discover the foundational beliefs that guide our worship and doctrine.
@@ -189,7 +189,7 @@ export default function HomePage() {
               action: "Reach out"
             }
           ].map((card) => (
-            <div key={card.title} className="rounded-[2.5rem] bg-mist border border-wheat p-8 shadow-soft-md">
+            <div key={card.title} className="rounded-none bg-mist border border-wheat p-8 shadow-soft-md">
               <p className="text-xs uppercase tracking-[0.3em] text-ember">{card.title}</p>
               <p className="mt-3 text-sm text-slate-600">{card.body}</p>
               <Button href={card.href} variant="outline" className="mt-4">
@@ -201,7 +201,7 @@ export default function HomePage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-10">
-        <div className="rounded-[2.5rem] bg-mist border border-wheat p-10 md:p-16 grid gap-10 md:grid-cols-[1.2fr_0.8fr] items-center">
+        <div className="rounded-none bg-mist border border-wheat p-10 md:p-16 grid gap-10 md:grid-cols-[1.2fr_0.8fr] items-center">
           <div className="space-y-4">
             <p className="text-xs uppercase tracking-[0.3em] text-ember">Jesus is calling</p>
             <h2 className="font-display text-3xl md:text-4xl text-ink">Respond to the call of Jesus Christ today.</h2>
@@ -263,7 +263,7 @@ export default function HomePage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-20">
-        <div className="rounded-[2.5rem] bg-ember text-white p-10 md:p-16 grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
+        <div className="rounded-none bg-ember text-white p-10 md:p-16 grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
           <div className="space-y-4">
             <p className="text-xs uppercase tracking-[0.3em] text-white/80">Give with impact</p>
             <h2 className="font-display text-3xl md:text-4xl">Your generosity fuels ministry and mission.</h2>

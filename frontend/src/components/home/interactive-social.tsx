@@ -30,7 +30,7 @@ const socialCards: Array<{
     subtitle: "Full sermons, livestream replays, and special events.",
     button: "Subscribe on YouTube",
     bg: "bg-ember text-white",
-    rounded: "rounded-3xl",
+    rounded: "rounded-none",
     icon: <Youtube className="h-10 w-10 text-white" />
   },
   {
@@ -39,7 +39,7 @@ const socialCards: Array<{
     subtitle: "Photo moments and weekly encouragement.",
     button: "Follow on Instagram",
     bg: "bg-sage text-white",
-    rounded: "rounded-2xl",
+    rounded: "rounded-none",
     icon: <Instagram className="h-10 w-10 text-wheat" />
   }
 ];
