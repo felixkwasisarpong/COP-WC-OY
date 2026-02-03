@@ -2,8 +2,8 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { fetchSiteContent } from "@/services/site-content";
-import { fetchSermon } from "@/services/sermons";
-import { fetchEvent } from "@/services/events";
+import { fetchSermon, fetchSermons } from "@/services/sermons";
+import { fetchEvent, fetchEvents } from "@/services/events";
 import { SermonCard } from "@/components/sermon-card";
 import { EventCard } from "@/components/event-card";
 import { mediaViewUrl } from "@/services/media";
@@ -26,29 +26,52 @@ export function FeaturedContent() {
     enabled: Boolean(site?.featured_event_id)
   });
 
-  if (!sermon && !event) {
-    return null;
+  const { data: latestSermons } = useQuery({
+    queryKey: ["latest-sermons"],
+    queryFn: fetchSermons,
+    enabled: !site?.featured_sermon_id
+  });
+
+  const { data: latestEvents } = useQuery({
+    queryKey: ["latest-events"],
+    queryFn: fetchEvents,
+    enabled: !site?.featured_event_id
+  });
+
+  const fallbackSermon = latestSermons?.items?.[0];
+  const fallbackEvent = latestEvents?.items?.[0];
+  const selectedSermon = sermon || fallbackSermon;
+  const selectedEvent = event || fallbackEvent;
+
+  if (!selectedSermon && !selectedEvent) {
+    return (
+      <div className="rounded-none bg-white/80 p-8 text-center text-sm text-slate-600 shadow-soft-md">
+        Featured items will appear here once they are selected in Admin → Site Content.
+      </div>
+    );
   }
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
-      {sermon && (
+      {selectedSermon && (
         <SermonCard
-          id={sermon.id}
-          title={sermon.title}
-          speaker={sermon.speaker}
-          date={new Date(sermon.sermon_date).toLocaleDateString()}
-          scripture={sermon.scripture}
-          imageUrl={sermon.thumbnail_media_id ? mediaViewUrl(sermon.thumbnail_media_id) : undefined}
+          id={selectedSermon.id}
+          title={selectedSermon.title}
+          speaker={selectedSermon.speaker}
+          date={new Date(selectedSermon.sermon_date).toLocaleDateString()}
+          scripture={selectedSermon.scripture}
+          imageUrl={
+            selectedSermon.thumbnail_media_id ? mediaViewUrl(selectedSermon.thumbnail_media_id) : undefined
+          }
         />
       )}
-      {event && (
+      {selectedEvent && (
         <EventCard
-          id={event.id}
-          title={event.title}
-          date={new Date(event.start_time).toLocaleString()}
-          location={event.location}
-          imageUrl={event.cover_image_id ? mediaViewUrl(event.cover_image_id) : undefined}
+          id={selectedEvent.id}
+          title={selectedEvent.title}
+          date={new Date(selectedEvent.start_time).toLocaleString()}
+          location={selectedEvent.location}
+          imageUrl={selectedEvent.cover_image_id ? mediaViewUrl(selectedEvent.cover_image_id) : undefined}
         />
       )}
     </div>
