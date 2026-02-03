@@ -108,35 +108,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 space-y-10">
-        <div className="grid gap-6 md:grid-cols-3">
-          {[
-            {
-              title: "Our Vision",
-              body: "To become a global Pentecostal church that is culturally relevant in vibrant evangelism, church planting, discipleship and holistic ministry.",
-              action: "See the vision"
-            },
-            {
-              title: "Our Mission",
-              body: "To bring all people to the saving knowledge of Christ and to discipleship through the proclamation of the gospel, prayer, and service.",
-              action: "Dive in"
-            },
-            {
-              title: "Core Values",
-              body: "Prayer, holiness, evangelism, discipleship, stewardship, and servant leadership.",
-              action: "Discover"
-            }
-          ].map((card) => (
-            <div key={card.title} className="rounded-none bg-white/90 p-6 shadow-soft-md space-y-3">
-              <p className="text-xs uppercase tracking-[0.3em] text-ember">{card.title}</p>
-              <p className="text-sm text-slate-600">{card.body}</p>
-              <Button href="/about" variant="outline">
-                {card.action}
-              </Button>
-            </div>
-          ))}
-        </div>
-      </section>
 
       <section className="mx-auto max-w-6xl px-4 space-y-10">
         <SectionHeading
@@ -173,32 +144,6 @@ export default function HomePage() {
 
       <InteractiveSocial />
 
-      <section className="mx-auto max-w-6xl px-4 space-y-10">
-        <div className="grid gap-6 md:grid-cols-2">
-          {[
-            {
-              title: "Give towards the work of God",
-              body: "Partner with us in kingdom impact through your generosity.",
-              href: "/give",
-              action: "Give now"
-            },
-            {
-              title: "Have Questions?",
-              body: "We are here to help you take your next step.",
-              href: "/contact",
-              action: "Reach out"
-            }
-          ].map((card) => (
-            <div key={card.title} className="rounded-[2.5rem] bg-mist border border-wheat p-8 shadow-soft-md">
-              <p className="text-xs uppercase tracking-[0.3em] text-ember">{card.title}</p>
-              <p className="mt-3 text-sm text-slate-600">{card.body}</p>
-              <Button href={card.href} variant="outline" className="mt-4">
-                {card.action}
-              </Button>
-            </div>
-          ))}
-        </div>
-      </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-10">
         <div className="rounded-[2.5rem] bg-mist border border-wheat p-10 md:p-16 grid gap-10 md:grid-cols-[1.2fr_0.8fr] items-center">

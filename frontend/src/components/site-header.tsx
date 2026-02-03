@@ -44,7 +44,7 @@ export function SiteHeader() {
             <div className="flex flex-wrap items-center gap-4">
               <span className="flex items-center gap-2">
                 <Phone className="h-3 w-3" />
-                (555) 555-1234
+                +233 24 288 5908
               </span>
               <span className="flex items-center gap-2">
                 <Mail className="h-3 w-3" />
@@ -52,7 +52,7 @@ export function SiteHeader() {
               </span>
               <span className="flex items-center gap-2">
                 <MapPin className="h-3 w-3" />
-                Oyarifa Worship Center
+                # 2 Pentecost lane Oyarifa-Teiman, Ghana
               </span>
             </div>
             <div className="flex items-center gap-3">
