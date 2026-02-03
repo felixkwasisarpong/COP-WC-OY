@@ -11,7 +11,7 @@ export default function AboutPage() {
         description="We are a Bible-believing, Holy Spirit, people and mission oriented church."
       />
       <div className="grid gap-10 md:grid-cols-2 items-center">
-        <div className="space-y-4 text-slate-600">
+        <div className="space-y-6 text-slate-600">
           <p>
             We are part of The Church of Pentecost, a global Pentecostal movement devoted to
             proclaiming Christ, making disciples, and serving communities with compassion.
@@ -57,6 +57,28 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-3">
+        {[
+          {
+            title: "Our Vision",
+            body: "To become a global Pentecostal church that is culturally relevant in vibrant evangelism, church planting, discipleship and holistic ministry."
+          },
+          {
+            title: "Our Mission",
+            body: "To bring all people to the saving knowledge of Christ and to discipleship through the proclamation of the gospel, prayer, and service."
+          },
+          {
+            title: "Core Values",
+            body: "Prayer, holiness, evangelism, discipleship, stewardship, and servant leadership."
+          }
+        ].map((card) => (
+          <div key={card.title} className="rounded-none bg-white/90 p-6 shadow-soft-md space-y-3">
+            <p className="text-xs uppercase tracking-[0.3em] text-ember">{card.title}</p>
+            <p className="text-sm text-slate-600">{card.body}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
