@@ -82,7 +82,7 @@ export default function AdminSiteContentPage() {
     const media = resolvedId ? (mediaById.get(resolvedId) as any) : null;
     if (!media) {
       return (
-        <div className="h-24 w-full rounded-2xl bg-mist flex items-center justify-center text-xs text-slate-500">
+        <div className="h-24 w-full bg-mist flex items-center justify-center text-xs text-slate-500">
           No image selected
         </div>
       );
@@ -92,7 +92,7 @@ export default function AdminSiteContentPage() {
         <img
           src={mediaViewUrl(media.id)}
           alt={media.title}
-          className="h-24 w-full rounded-2xl object-cover"
+          className="h-24 w-full object-cover"
         />
         <p className="text-xs text-slate-600">{media.title}</p>
       </div>
