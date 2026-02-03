@@ -45,7 +45,7 @@ export default function MinistriesPage() {
           </div>
         </div>
       </div>
-      <div className="mx-auto max-w-5xl px-4">
+      <div className="mx-auto max-w-5xl px-4 pb-16">
         <div className="grid gap-6 md:grid-cols-2">
           {ministries.map((ministry) => (
             <div key={ministry.name} className="rounded-none border border-wheat bg-white/80 p-6 shadow-soft-md">
