@@ -35,8 +35,7 @@ export default function AdminMediaPage() {
       for (const file of files) {
         const form = new FormData();
         form.append("file", file);
-        const resolvedTitle = files.length > 1 ? `${title} ${files.indexOf(file) + 1}` : title;
-        form.append("title", resolvedTitle);
+        form.append("title", title);
         form.append("description", description);
         form.append("is_public", String(isPublic));
         form.append("downloads_enabled", String(downloadsEnabled));
