@@ -75,11 +75,11 @@ export default function AdminSiteContentPage() {
   const mediaOptions = mediaData?.items || [];
   const sermonOptions = sermons?.items || [];
   const eventOptions = events?.items || [];
-  const mediaById = new Map(mediaOptions.map((media: any) => [media.id, media]));
+  const mediaById = new Map<number, any>(mediaOptions.map((media: any) => [media.id, media]));
 
   const renderMediaPreview = (mediaId: string) => {
     const resolvedId = mediaId ? Number(mediaId) : null;
-    const media = resolvedId ? mediaById.get(resolvedId) : null;
+    const media = resolvedId ? (mediaById.get(resolvedId) as any) : null;
     if (!media) {
       return (
         <div className="h-24 w-full rounded-2xl bg-mist flex items-center justify-center text-xs text-slate-500">
