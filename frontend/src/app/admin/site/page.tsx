@@ -29,7 +29,11 @@ export default function AdminSiteContentPage() {
     featured_event_id: "",
     about_media_id: "",
     ministries_media_id: "",
-    contact_media_id: ""
+    contact_media_id: "",
+    social_facebook_url: "",
+    social_instagram_url: "",
+    social_youtube_url: "",
+    social_tiktok_url: ""
   });
 
   useEffect(() => {
@@ -40,7 +44,11 @@ export default function AdminSiteContentPage() {
       featured_event_id: siteContent.featured_event_id ? String(siteContent.featured_event_id) : "",
       about_media_id: siteContent.about_media_id ? String(siteContent.about_media_id) : "",
       ministries_media_id: siteContent.ministries_media_id ? String(siteContent.ministries_media_id) : "",
-      contact_media_id: siteContent.contact_media_id ? String(siteContent.contact_media_id) : ""
+      contact_media_id: siteContent.contact_media_id ? String(siteContent.contact_media_id) : "",
+      social_facebook_url: siteContent.social_facebook_url || "",
+      social_instagram_url: siteContent.social_instagram_url || "",
+      social_youtube_url: siteContent.social_youtube_url || "",
+      social_tiktok_url: siteContent.social_tiktok_url || ""
     });
   }, [siteContent]);
 
@@ -53,7 +61,11 @@ export default function AdminSiteContentPage() {
           featured_event_id: form.featured_event_id ? Number(form.featured_event_id) : null,
           about_media_id: form.about_media_id ? Number(form.about_media_id) : null,
           ministries_media_id: form.ministries_media_id ? Number(form.ministries_media_id) : null,
-          contact_media_id: form.contact_media_id ? Number(form.contact_media_id) : null
+          contact_media_id: form.contact_media_id ? Number(form.contact_media_id) : null,
+          social_facebook_url: form.social_facebook_url || null,
+          social_instagram_url: form.social_instagram_url || null,
+          social_youtube_url: form.social_youtube_url || null,
+          social_tiktok_url: form.social_tiktok_url || null
         },
         token || ""
       ),
@@ -147,6 +159,52 @@ export default function AdminSiteContentPage() {
               </option>
             ))}
           </select>
+        </div>
+      </div>
+
+      <div className="rounded-[2rem] bg-white/90 p-6 shadow-soft-md space-y-4">
+        <h3 className="font-display text-xl text-ink">Social links</h3>
+        <div className="grid gap-4 md:grid-cols-2">
+          <label className="text-xs uppercase tracking-[0.3em] text-slate-500">
+            Facebook URL
+            <input
+              className="mt-2 w-full rounded-2xl border border-wheat px-4 py-3 text-sm"
+              value={form.social_facebook_url}
+              onChange={(event) => setForm({ ...form, social_facebook_url: event.target.value })}
+              placeholder="https://facebook.com/..."
+              type="url"
+            />
+          </label>
+          <label className="text-xs uppercase tracking-[0.3em] text-slate-500">
+            Instagram URL
+            <input
+              className="mt-2 w-full rounded-2xl border border-wheat px-4 py-3 text-sm"
+              value={form.social_instagram_url}
+              onChange={(event) => setForm({ ...form, social_instagram_url: event.target.value })}
+              placeholder="https://instagram.com/..."
+              type="url"
+            />
+          </label>
+          <label className="text-xs uppercase tracking-[0.3em] text-slate-500">
+            YouTube URL
+            <input
+              className="mt-2 w-full rounded-2xl border border-wheat px-4 py-3 text-sm"
+              value={form.social_youtube_url}
+              onChange={(event) => setForm({ ...form, social_youtube_url: event.target.value })}
+              placeholder="https://youtube.com/..."
+              type="url"
+            />
+          </label>
+          <label className="text-xs uppercase tracking-[0.3em] text-slate-500">
+            TikTok URL
+            <input
+              className="mt-2 w-full rounded-2xl border border-wheat px-4 py-3 text-sm"
+              value={form.social_tiktok_url}
+              onChange={(event) => setForm({ ...form, social_tiktok_url: event.target.value })}
+              placeholder="https://tiktok.com/@..."
+              type="url"
+            />
+          </label>
         </div>
       </div>
 

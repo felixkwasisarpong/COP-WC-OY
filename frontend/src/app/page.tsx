@@ -6,7 +6,7 @@ import { HeroMedia } from "@/components/home/hero-media";
 import { FeaturedContent } from "@/components/home/featured-content";
 import { Tenets } from "@/components/home/tenets";
 import { AnnouncementPreview } from "@/components/home/announcement-preview";
-import { Instagram, Music2, Youtube } from "lucide-react";
+import { InteractiveSocial } from "@/components/home/interactive-social";
 
 export default function HomePage() {
   const homeVideoUrl = process.env.NEXT_PUBLIC_HOME_VIDEO_URL;
@@ -171,55 +171,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 space-y-8">
-        <div className="flex items-center justify-center">
-          <h2 className="bg-mist px-6 py-2 font-display text-3xl text-ink">Let's Get Interactive</h2>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          {[
-            {
-              title: "TikTok",
-              subtitle: "Short clips, testimonies, and worship highlights.",
-              icon: <Music2 className="h-10 w-10 text-wheat" />,
-              bg: "bg-ink text-white",
-              button: "Follow on TikTok",
-              rounded: "rounded-none"
-            },
-            {
-              title: "YouTube",
-              subtitle: "Full sermons, livestream replays, and special events.",
-              icon: <Youtube className="h-10 w-10 text-white" />,
-              bg: "bg-ember text-white",
-              button: "Subscribe on YouTube",
-              rounded: "rounded-3xl"
-            },
-            {
-              title: "Instagram",
-              subtitle: "Photo moments and weekly encouragement.",
-              icon: <Instagram className="h-10 w-10 text-wheat" />,
-              bg: "bg-sage text-white",
-              button: "Follow on Instagram",
-              rounded: "rounded-2xl"
-            }
-          ].map((social) => (
-            <div
-              key={social.title}
-              className={`${social.rounded} ${social.bg} p-8 shadow-soft-md flex flex-col justify-between min-h-[280px]`}
-            >
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  {social.icon}
-                  <h3 className="font-display text-2xl">{social.title}</h3>
-                </div>
-                <p className="text-sm text-white/80">{social.subtitle}</p>
-              </div>
-              <button className="mt-8 inline-flex items-center justify-center rounded-none border border-white/60 px-4 py-2 text-xs uppercase tracking-[0.3em] text-white transition hover:bg-white hover:text-ink">
-                {social.button}
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
+      <InteractiveSocial />
 
       <section className="mx-auto max-w-6xl px-4 space-y-10">
         <div className="grid gap-6 md:grid-cols-2">

@@ -8,6 +8,10 @@ export type SiteContent = {
   about_media_id?: number | null;
   ministries_media_id?: number | null;
   contact_media_id?: number | null;
+  social_facebook_url?: string | null;
+  social_instagram_url?: string | null;
+  social_youtube_url?: string | null;
+  social_tiktok_url?: string | null;
 };
 
 export async function fetchSiteContent() {
