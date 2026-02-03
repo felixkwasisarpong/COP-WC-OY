@@ -98,7 +98,7 @@ export function SiteHeader() {
       )}
       <div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
-          <img src="/logo.svg" alt="The Church of Pentecost logo" className="h-10 w-10" />
+          <img src="/logo.png" alt="The Church of Pentecost logo" className="h-10 w-10" />
           <span className="font-display text-lg leading-tight">
             <span className={`block ${isHome ? "text-white" : "text-ink"}`}>The Church of Pentecost</span>
             <span
