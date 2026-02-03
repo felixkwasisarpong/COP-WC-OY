@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AdminShell } from "@/components/admin-shell";
 import { fetchSiteContent, updateSiteContent } from "@/services/site-content";
-import { fetchMedia } from "@/services/media";
+import { fetchMedia, mediaViewUrl } from "@/services/media";
 import { fetchSermons } from "@/services/sermons";
 import { fetchEvents } from "@/services/events";
 import { useAuth } from "@/hooks/use-auth";
@@ -75,24 +75,50 @@ export default function AdminSiteContentPage() {
   const mediaOptions = mediaData?.items || [];
   const sermonOptions = sermons?.items || [];
   const eventOptions = events?.items || [];
+  const mediaById = new Map(mediaOptions.map((media: any) => [media.id, media]));
+
+  const renderMediaPreview = (mediaId: string) => {
+    const resolvedId = mediaId ? Number(mediaId) : null;
+    const media = resolvedId ? mediaById.get(resolvedId) : null;
+    if (!media) {
+      return (
+        <div className="h-24 w-full rounded-2xl bg-mist flex items-center justify-center text-xs text-slate-500">
+          No image selected
+        </div>
+      );
+    }
+    return (
+      <div className="space-y-2">
+        <img
+          src={mediaViewUrl(media.id)}
+          alt={media.title}
+          className="h-24 w-full rounded-2xl object-cover"
+        />
+        <p className="text-xs text-slate-600">{media.title}</p>
+      </div>
+    );
+  };
 
   return (
     <AdminShell title="Site content" subtitle="Control featured content and hero imagery.">
       <div className="rounded-[2rem] bg-white/90 p-6 shadow-soft-md space-y-4">
         <h3 className="font-display text-xl text-ink">Homepage highlights</h3>
         <div className="grid gap-4 md:grid-cols-2">
-          <select
-            className="rounded-2xl border border-wheat px-4 py-3"
-            value={form.hero_media_id}
-            onChange={(event) => setForm({ ...form, hero_media_id: event.target.value })}
-          >
-            <option value="">Hero image (optional)</option>
-            {mediaOptions.map((media: any) => (
-              <option key={media.id} value={media.id}>
-                {media.title}
-              </option>
-            ))}
-          </select>
+          <div className="space-y-3">
+            <select
+              className="rounded-2xl border border-wheat px-4 py-3"
+              value={form.hero_media_id}
+              onChange={(event) => setForm({ ...form, hero_media_id: event.target.value })}
+            >
+              <option value="">Hero image (optional)</option>
+              {mediaOptions.map((media: any) => (
+                <option key={media.id} value={media.id}>
+                  {media.title}
+                </option>
+              ))}
+            </select>
+            {renderMediaPreview(form.hero_media_id)}
+          </div>
           <select
             className="rounded-2xl border border-wheat px-4 py-3"
             value={form.featured_sermon_id}
@@ -123,42 +149,51 @@ export default function AdminSiteContentPage() {
       <div className="rounded-[2rem] bg-white/90 p-6 shadow-soft-md space-y-4">
         <h3 className="font-display text-xl text-ink">Page imagery</h3>
         <div className="grid gap-4 md:grid-cols-2">
-          <select
-            className="rounded-2xl border border-wheat px-4 py-3"
-            value={form.about_media_id}
-            onChange={(event) => setForm({ ...form, about_media_id: event.target.value })}
-          >
-            <option value="">About page image</option>
-            {mediaOptions.map((media: any) => (
-              <option key={media.id} value={media.id}>
-                {media.title}
-              </option>
-            ))}
-          </select>
-          <select
-            className="rounded-2xl border border-wheat px-4 py-3"
-            value={form.ministries_media_id}
-            onChange={(event) => setForm({ ...form, ministries_media_id: event.target.value })}
-          >
-            <option value="">Ministries page image</option>
-            {mediaOptions.map((media: any) => (
-              <option key={media.id} value={media.id}>
-                {media.title}
-              </option>
-            ))}
-          </select>
-          <select
-            className="rounded-2xl border border-wheat px-4 py-3"
-            value={form.contact_media_id}
-            onChange={(event) => setForm({ ...form, contact_media_id: event.target.value })}
-          >
-            <option value="">Contact page image</option>
-            {mediaOptions.map((media: any) => (
-              <option key={media.id} value={media.id}>
-                {media.title}
-              </option>
-            ))}
-          </select>
+          <div className="space-y-3">
+            <select
+              className="rounded-2xl border border-wheat px-4 py-3"
+              value={form.about_media_id}
+              onChange={(event) => setForm({ ...form, about_media_id: event.target.value })}
+            >
+              <option value="">About page image</option>
+              {mediaOptions.map((media: any) => (
+                <option key={media.id} value={media.id}>
+                  {media.title}
+                </option>
+              ))}
+            </select>
+            {renderMediaPreview(form.about_media_id)}
+          </div>
+          <div className="space-y-3">
+            <select
+              className="rounded-2xl border border-wheat px-4 py-3"
+              value={form.ministries_media_id}
+              onChange={(event) => setForm({ ...form, ministries_media_id: event.target.value })}
+            >
+              <option value="">Ministries page image</option>
+              {mediaOptions.map((media: any) => (
+                <option key={media.id} value={media.id}>
+                  {media.title}
+                </option>
+              ))}
+            </select>
+            {renderMediaPreview(form.ministries_media_id)}
+          </div>
+          <div className="space-y-3">
+            <select
+              className="rounded-2xl border border-wheat px-4 py-3"
+              value={form.contact_media_id}
+              onChange={(event) => setForm({ ...form, contact_media_id: event.target.value })}
+            >
+              <option value="">Contact page image</option>
+              {mediaOptions.map((media: any) => (
+                <option key={media.id} value={media.id}>
+                  {media.title}
+                </option>
+              ))}
+            </select>
+            {renderMediaPreview(form.contact_media_id)}
+          </div>
         </div>
       </div>
 

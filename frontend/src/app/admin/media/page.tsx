@@ -195,9 +195,6 @@ export default function AdminMediaPage() {
                     </button>
                   </div>
                 </div>
-                <div>
-                  <h4 className="font-display text-lg text-ink">{media.title}</h4>
-                </div>
                 <div className="flex flex-wrap gap-4 text-sm text-slate-600">
                   <label className="flex items-center gap-2">
                     <input
