@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     cors_origins: str = "http://localhost:3000"
     media_root: str = "/app/media"
     bootstrap_admin_secret: str | None = None
+    bootstrap_admin_allow_multiple: bool = False
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

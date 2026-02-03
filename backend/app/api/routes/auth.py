@@ -44,9 +44,10 @@ def bootstrap_admin_user(
         raise HTTPException(status_code=403, detail="Bootstrap admin disabled")
     if not x_bootstrap_secret or x_bootstrap_secret != settings.bootstrap_admin_secret:
         raise HTTPException(status_code=403, detail="Invalid bootstrap secret")
-    existing_admin = db.query(User).filter(User.role == UserRole.ADMIN).first()
-    if existing_admin:
-        raise HTTPException(status_code=400, detail="Admin already exists")
+    if not settings.bootstrap_admin_allow_multiple:
+        existing_admin = db.query(User).filter(User.role == UserRole.ADMIN).first()
+        if existing_admin:
+            raise HTTPException(status_code=400, detail="Admin already exists")
     existing = get_user_by_email(db, payload.email)
     if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
