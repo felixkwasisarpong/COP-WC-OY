@@ -46,3 +46,17 @@ export async function downloadMedia(id: number, token: string) {
   }
   return response.blob();
 }
+
+export async function deleteMedia(id: number, token: string) {
+  return apiFetch(`/media/${id}`, {
+    method: "DELETE",
+    token
+  });
+}
+
+export async function deleteAllMedia(token: string) {
+  return apiFetch("/media", {
+    method: "DELETE",
+    token
+  });
+}

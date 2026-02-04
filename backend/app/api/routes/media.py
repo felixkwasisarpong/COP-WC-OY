@@ -3,7 +3,12 @@ from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 
 from app.api import deps
+from app.models.event import Event, EventMedia
+from app.models.leader import Leader
+from app.models.livestream import LivestreamConfig
 from app.models.media import MediaAsset
+from app.models.sermon import Sermon
+from app.models.site_content import SiteContent
 from app.schemas.media import MediaOut, MediaUpdate
 from app.schemas.pagination import Page
 from app.services.media import save_media
@@ -11,6 +16,59 @@ from app.storage.local import LocalStorage
 from app.core.config import settings
 
 router = APIRouter()
+
+
+def _clear_media_references(db: Session, media_id: int) -> None:
+    db.query(EventMedia).filter(EventMedia.media_id == media_id).delete(synchronize_session=False)
+    db.query(Event).filter(Event.cover_image_id == media_id).update(
+        {Event.cover_image_id: None},
+        synchronize_session=False,
+    )
+    db.query(Sermon).filter(Sermon.thumbnail_media_id == media_id).update(
+        {Sermon.thumbnail_media_id: None},
+        synchronize_session=False,
+    )
+    db.query(Leader).filter(Leader.photo_media_id == media_id).update(
+        {Leader.photo_media_id: None},
+        synchronize_session=False,
+    )
+    db.query(LivestreamConfig).filter(LivestreamConfig.cover_image_id == media_id).update(
+        {LivestreamConfig.cover_image_id: None},
+        synchronize_session=False,
+    )
+    db.query(SiteContent).filter(SiteContent.hero_media_id == media_id).update(
+        {SiteContent.hero_media_id: None},
+        synchronize_session=False,
+    )
+    db.query(SiteContent).filter(SiteContent.about_media_id == media_id).update(
+        {SiteContent.about_media_id: None},
+        synchronize_session=False,
+    )
+    db.query(SiteContent).filter(SiteContent.ministries_media_id == media_id).update(
+        {SiteContent.ministries_media_id: None},
+        synchronize_session=False,
+    )
+    db.query(SiteContent).filter(SiteContent.contact_media_id == media_id).update(
+        {SiteContent.contact_media_id: None},
+        synchronize_session=False,
+    )
+
+
+def _clear_all_media_references(db: Session) -> None:
+    db.query(EventMedia).delete(synchronize_session=False)
+    db.query(Event).update({Event.cover_image_id: None}, synchronize_session=False)
+    db.query(Sermon).update({Sermon.thumbnail_media_id: None}, synchronize_session=False)
+    db.query(Leader).update({Leader.photo_media_id: None}, synchronize_session=False)
+    db.query(LivestreamConfig).update({LivestreamConfig.cover_image_id: None}, synchronize_session=False)
+    db.query(SiteContent).update(
+        {
+            SiteContent.hero_media_id: None,
+            SiteContent.about_media_id: None,
+            SiteContent.ministries_media_id: None,
+            SiteContent.contact_media_id: None,
+        },
+        synchronize_session=False,
+    )
 
 
 @router.get("/", response_model=Page[MediaOut])
@@ -119,3 +177,37 @@ def view_media(
     if not file_path.exists():
         raise HTTPException(status_code=404, detail="File missing")
     return FileResponse(path=str(file_path), media_type=media.content_type)
+
+
+@router.delete("/{media_id}")
+def delete_media(
+    media_id: int,
+    db: Session = Depends(deps.get_db),
+    _: dict = Depends(deps.require_admin),
+) -> dict:
+    media = db.query(MediaAsset).filter(MediaAsset.id == media_id).first()
+    if not media:
+        raise HTTPException(status_code=404, detail="Media not found")
+    storage_key = media.storage_key
+    _clear_media_references(db, media_id)
+    db.delete(media)
+    db.commit()
+    storage = LocalStorage(settings.media_root)
+    storage.delete(storage_key)
+    return {"deleted": True, "id": media_id}
+
+
+@router.delete("/")
+def delete_all_media(
+    db: Session = Depends(deps.get_db),
+    _: dict = Depends(deps.require_admin),
+) -> dict:
+    media_items = db.query(MediaAsset.storage_key).all()
+    storage_keys = [item.storage_key for item in media_items]
+    _clear_all_media_references(db)
+    deleted = db.query(MediaAsset).delete(synchronize_session=False)
+    db.commit()
+    storage = LocalStorage(settings.media_root)
+    for storage_key in storage_keys:
+        storage.delete(storage_key)
+    return {"deleted": deleted}

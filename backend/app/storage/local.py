@@ -21,3 +21,10 @@ class LocalStorage:
 
     def open(self, storage_key: str) -> Path:
         return self.root / storage_key
+
+    def delete(self, storage_key: str) -> bool:
+        path = self.root / storage_key
+        if path.exists():
+            path.unlink()
+            return True
+        return False
