@@ -3,8 +3,16 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AdminShell } from "@/components/admin-shell";
-import { downloadMedia, fetchMedia, mediaViewUrl, updateMedia, uploadMedia } from "@/services/media";
-import { Download, Eye } from "lucide-react";
+import {
+  deleteAllMedia,
+  deleteMedia,
+  downloadMedia,
+  fetchMedia,
+  mediaViewUrl,
+  updateMedia,
+  uploadMedia
+} from "@/services/media";
+import { Download, Eye, Trash2 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 
 export default function AdminMediaPage() {
@@ -23,6 +31,8 @@ export default function AdminMediaPage() {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [bulkLoading, setBulkLoading] = useState(false);
   const [bulkError, setBulkError] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [deleteAllError, setDeleteAllError] = useState<string | null>(null);
 
   const uploadMutation = useMutation({
     mutationFn: async () => {
@@ -60,6 +70,26 @@ export default function AdminMediaPage() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin-media"] })
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => deleteMedia(id, token || ""),
+    onSuccess: () => {
+      setDeleteError(null);
+      queryClient.invalidateQueries({ queryKey: ["admin-media"] });
+    },
+    onError: (error) =>
+      setDeleteError(error instanceof Error ? error.message : "Delete failed. Please try again.")
+  });
+
+  const deleteAllMutation = useMutation({
+    mutationFn: () => deleteAllMedia(token || ""),
+    onSuccess: () => {
+      setDeleteAllError(null);
+      queryClient.invalidateQueries({ queryKey: ["admin-media"] });
+    },
+    onError: (error) =>
+      setDeleteAllError(error instanceof Error ? error.message : "Delete all failed. Please try again.")
+  });
+
   const applyBulkUpdate = async (payload: Record<string, any>) => {
     if (!data?.items?.length || !token) return;
     setBulkLoading(true);
@@ -85,6 +115,20 @@ export default function AdminMediaPage() {
     link.download = filename;
     link.click();
     window.URL.revokeObjectURL(url);
+  };
+
+  const handleDelete = (id: number, title: string) => {
+    if (!token) return;
+    const confirmed = window.confirm(`Delete "${title}"? This cannot be undone.`);
+    if (!confirmed) return;
+    deleteMutation.mutate(id);
+  };
+
+  const handleDeleteAll = () => {
+    if (!token || !data?.items?.length) return;
+    const confirmed = window.confirm("Delete all media? This cannot be undone.");
+    if (!confirmed) return;
+    deleteAllMutation.mutate();
   };
 
   return (
@@ -150,8 +194,17 @@ export default function AdminMediaPage() {
           >
             Enable all downloads
           </button>
+          <button
+            onClick={handleDeleteAll}
+            className="rounded-full border border-ember px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember"
+            disabled={deleteAllMutation.isPending || !(data?.items || []).length}
+          >
+            {deleteAllMutation.isPending ? "Deleting..." : "Delete all media"}
+          </button>
           {bulkLoading && <span className="text-xs text-slate-500">Updating...</span>}
           {bulkError && <span className="text-xs text-ember">{bulkError}</span>}
+          {deleteError && <span className="text-xs text-ember">{deleteError}</span>}
+          {deleteAllError && <span className="text-xs text-ember">{deleteAllError}</span>}
         </div>
         {isLoading ? (
           <p className="text-sm text-slate-600">Loading media...</p>
@@ -173,24 +226,34 @@ export default function AdminMediaPage() {
                   )}
                   <div className="absolute inset-0 bg-transparent group-hover:bg-slate-950/35 transition" />
                   <div className="absolute inset-x-3 bottom-3 flex items-center justify-between">
-                    <a
-                      href={mediaViewUrl(media.id)}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="Preview image"
-                      className="text-white transition hover:text-wheat"
-                    >
-                      <Eye className="h-5 w-5" />
-                    </a>
+                    <div className="flex items-center gap-3">
+                      <a
+                        href={mediaViewUrl(media.id)}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="Preview image"
+                        className="text-white transition hover:text-wheat"
+                      >
+                        <Eye className="h-5 w-5" />
+                      </a>
+                      <button
+                        onClick={() => handleDownload(media.id, media.filename)}
+                        aria-label="Download image"
+                        disabled={!media.downloads_enabled}
+                        className={`transition ${
+                          media.downloads_enabled ? "text-white hover:text-wheat" : "text-white/40 cursor-not-allowed"
+                        }`}
+                      >
+                        <Download className="h-5 w-5" />
+                      </button>
+                    </div>
                     <button
-                      onClick={() => handleDownload(media.id, media.filename)}
-                      aria-label="Download image"
-                      disabled={!media.downloads_enabled}
-                      className={`transition ${
-                        media.downloads_enabled ? "text-white hover:text-wheat" : "text-white/40 cursor-not-allowed"
-                      }`}
+                      onClick={() => handleDelete(media.id, media.title || media.filename)}
+                      aria-label="Delete image"
+                      className="text-white transition hover:text-ember"
+                      disabled={deleteMutation.isPending}
                     >
-                      <Download className="h-5 w-5" />
+                      <Trash2 className="h-5 w-5" />
                     </button>
                   </div>
                 </div>
